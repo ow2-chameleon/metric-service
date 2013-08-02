@@ -26,11 +26,7 @@ import java.util.Date;
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * Created with IntelliJ IDEA.
- * User: root
- * Date: 15/07/13
- * Time: 13:07
- * To change this template use File | Settings | File Templates.
+ * Checks measure behavior.
  */
 public class MeasureTest {
 

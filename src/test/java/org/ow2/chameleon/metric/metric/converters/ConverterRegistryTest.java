@@ -14,14 +14,14 @@
  */
 package org.ow2.chameleon.metric.metric.converters;
 
+import org.junit.Test;
 import org.ow2.chameleon.metric.metric.Quantity;
 import org.ow2.chameleon.metric.metric.quantities.Length;
-import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- *
+ * Checks the behavior of the converter registry and conversion chanin buidling.
  */
 public class ConverterRegistryTest {
 
