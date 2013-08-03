@@ -36,7 +36,7 @@ public class Temperature extends Quantity<Temperature> {
      */
     public static Unit<Temperature> CELSIUS =
             new TransformedUnitBuilder<Temperature>(KELVIN)
-                    .symbol("°C")
+                    .symbol("\u2103")
                     .name("Celsius")
                     .add(273.15)
                     .registerConverter()
@@ -46,7 +46,7 @@ public class Temperature extends Quantity<Temperature> {
      */
     public static Unit<Temperature> FAHRENHEIT =
             new TransformedUnitBuilder<Temperature>(KELVIN)
-                    .symbol("°F")
+                    .symbol("\u2109")
                     .name("Fahrenheit")
                     .times(5d / 9d)
                     .add(+459.67)

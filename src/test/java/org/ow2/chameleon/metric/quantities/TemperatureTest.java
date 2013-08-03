@@ -28,7 +28,7 @@ public class TemperatureTest {
     public void testConversionKtoC() {
         Temperature temperatureInK = Temperature.kelvin(1000);
         assertThat(temperatureInK.as(Temperature.CELSIUS).getNumber()).isEqualTo(726.85);
-        assertThat(temperatureInK.as(Temperature.CELSIUS).getUnit().getSymbol()).isEqualTo("°C");
+        assertThat(temperatureInK.as(Temperature.CELSIUS).getUnit().getSymbol()).isEqualTo("\u2103");
 
         Temperature temperatureInC = new Temperature(35, Temperature.CELSIUS);
         assertThat(temperatureInC.as(Temperature.KELVIN).getNumber()).isEqualTo(308.15);
@@ -39,7 +39,7 @@ public class TemperatureTest {
     public void testConversionKtoF() {
         Temperature temperatureInK = new Temperature(1000, Temperature.KELVIN);
         assertThat(temperatureInK.as(Temperature.FAHRENHEIT).getNumber().doubleValue()).isEqualTo(1340.33, Delta.delta(0.2));
-        assertThat(temperatureInK.as(Temperature.FAHRENHEIT).getUnit().getSymbol()).isEqualTo("°F");
+        assertThat(temperatureInK.as(Temperature.FAHRENHEIT).getUnit().getSymbol()).isEqualTo("\u2109");
 
         Temperature temperatureInC = Temperature.fahrenheit(35);
         assertThat(temperatureInC.as(Temperature.KELVIN).getNumber().doubleValue()).isEqualTo(274.81,
