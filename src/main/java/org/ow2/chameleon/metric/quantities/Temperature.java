@@ -27,7 +27,13 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Temperature extends Quantity<Temperature> {
 
+    /**
+     * The Kelvin unit (copy of {@link SI#KELVIN}.
+     */
     public static Unit<Temperature> KELVIN = SI.KELVIN;
+    /**
+     * The celsius unit.
+     */
     public static Unit<Temperature> CELSIUS =
             new TransformedUnitBuilder<Temperature>(KELVIN)
                     .symbol("°C")
@@ -35,7 +41,9 @@ public class Temperature extends Quantity<Temperature> {
                     .add(273.15)
                     .registerConverter()
                     .build();
-
+    /**
+     * The fahrenheit unit.
+     */
     public static Unit<Temperature> FAHRENHEIT =
             new TransformedUnitBuilder<Temperature>(KELVIN)
                     .symbol("°F")
@@ -46,11 +54,43 @@ public class Temperature extends Quantity<Temperature> {
                     .build();
 
     /**
-     * @param number
-     * @param unit
+     * Creates a new temperature
+     *
+     * @param number the value
+     * @param unit   the unit
      */
     public Temperature(Number number, Unit<Temperature> unit) {
         super(Temperature.class, number, unit);
+    }
+
+    /**
+     * Creates a new temperature in celsius.
+     *
+     * @param temp the value
+     * @return a new temperature object
+     */
+    public static Temperature celsius(Number temp) {
+        return new Temperature(temp, CELSIUS);
+    }
+
+    /**
+     * Creates a new temperature in kelvin.
+     *
+     * @param temp the value
+     * @return a new temperature object
+     */
+    public static Temperature kelvin(Number temp) {
+        return new Temperature(temp, KELVIN);
+    }
+
+    /**
+     * Creates a new temperature in fahrenheit.
+     *
+     * @param temp the value
+     * @return a new temperature object
+     */
+    public static Temperature fahrenheit(Number temp) {
+        return new Temperature(temp, FAHRENHEIT);
     }
 
 }

@@ -26,7 +26,7 @@ public class TemperatureTest {
 
     @Test
     public void testConversionKtoC() {
-        Temperature temperatureInK = new Temperature(1000, Temperature.KELVIN);
+        Temperature temperatureInK = Temperature.kelvin(1000);
         assertThat(temperatureInK.as(Temperature.CELSIUS).getNumber()).isEqualTo(726.85);
         assertThat(temperatureInK.as(Temperature.CELSIUS).getUnit().getSymbol()).isEqualTo("°C");
 
@@ -41,16 +41,15 @@ public class TemperatureTest {
         assertThat(temperatureInK.as(Temperature.FAHRENHEIT).getNumber().doubleValue()).isEqualTo(1340.33, Delta.delta(0.2));
         assertThat(temperatureInK.as(Temperature.FAHRENHEIT).getUnit().getSymbol()).isEqualTo("°F");
 
-        Temperature temperatureInC = new Temperature(35, Temperature.FAHRENHEIT);
-        Delta delta  = Delta.delta(0.5);
-
-        assertThat(temperatureInC.as(Temperature.KELVIN).getNumber().doubleValue()).isEqualTo(274.81, delta);
+        Temperature temperatureInC = Temperature.fahrenheit(35);
+        assertThat(temperatureInC.as(Temperature.KELVIN).getNumber().doubleValue()).isEqualTo(274.81,
+                Delta.delta(0.2));
         assertThat(temperatureInC.as(Temperature.KELVIN).getUnit().getSymbol()).isEqualTo("K");
     }
 
     @Test
     public void testConversionCtoF() {
-        Temperature temperatureInC = new Temperature(35, Temperature.CELSIUS);
+        Temperature temperatureInC = Temperature.celsius(35);
         assertThat(temperatureInC.as(Temperature.FAHRENHEIT).value().doubleValue()).isEqualTo(95.0, Delta.delta(0.2));
 
         Temperature temperatureInF = new Temperature(95, Temperature.FAHRENHEIT);
