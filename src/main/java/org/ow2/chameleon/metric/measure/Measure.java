@@ -15,6 +15,7 @@
 package org.ow2.chameleon.metric.measure;
 
 import org.ow2.chameleon.metric.Quantity;
+import org.ow2.chameleon.metric.Unit;
 
 import java.util.Date;
 
@@ -28,9 +29,19 @@ import java.util.Date;
  * <p/>
  * /!\ A measure is immutable /!\
  *
+ * Be aware that a value may contain an illegal value to reflect a not captured / not correctly measured value.
+ * In this case, and only in this case, a specific quantity `NOT_CAPTURED` is used.
+ *
  * @author jeremy.savonet@gmail.com
  */
 public class Measure {
+
+    /**
+     * A specific quantity used for measure that are invalid (because of a device failure, or issue in the response).
+     * This quantify uses a specific unit 'void' and has a zero-value.
+     */
+    public static Quantity NOT_CAPTURED = Quantity.valueOf(0.0, new Unit("\u2205", "void"));
+
     /**
      * |----------------------------------------------------------------------|
      * |  ID  |  QUANTITY   |   minDeviation  |   maxDeviation  |  TIMESTAMP  |
@@ -136,6 +147,15 @@ public class Measure {
 
         public Builder timeStamp(Date timeStamp) {
             this._timeStamp = timeStamp;
+            return this;
+        }
+
+        public Builder timeStamp(long time) {
+            return timeStamp(new Date(time));
+        }
+
+        public Builder notCaptured() {
+            this.quantity(NOT_CAPTURED);
             return this;
         }
 
