@@ -14,14 +14,46 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.fest.assertions.Delta;
+import org.junit.Test;
+
+import static org.fest.assertions.Assertions.assertThat;
+
 /**
- * Created with IntelliJ IDEA.
- * User: jeremy
- * Date: 15/07/13
- * Time: 14:52
- * To change this template use File | Settings | File Templates.
+ * Test temperature and conversion
  */
 public class TemperatureTest {
 
-    //TODO
+    @Test
+    public void testConversionKtoC() {
+        Temperature temperatureInK = new Temperature(1000, Temperature.KELVIN);
+        assertThat(temperatureInK.as(Temperature.CELSIUS).getNumber()).isEqualTo(726.85);
+        assertThat(temperatureInK.as(Temperature.CELSIUS).getUnit().getSymbol()).isEqualTo("°C");
+
+        Temperature temperatureInC = new Temperature(35, Temperature.CELSIUS);
+        assertThat(temperatureInC.as(Temperature.KELVIN).getNumber()).isEqualTo(308.15);
+        assertThat(temperatureInC.as(Temperature.KELVIN).getUnit().getSymbol()).isEqualTo("K");
+    }
+
+    @Test
+    public void testConversionKtoF() {
+        Temperature temperatureInK = new Temperature(1000, Temperature.KELVIN);
+        assertThat(temperatureInK.as(Temperature.FAHRENHEIT).getNumber().doubleValue()).isEqualTo(1340.33, Delta.delta(0.2));
+        assertThat(temperatureInK.as(Temperature.FAHRENHEIT).getUnit().getSymbol()).isEqualTo("°F");
+
+        Temperature temperatureInC = new Temperature(35, Temperature.FAHRENHEIT);
+        Delta delta  = Delta.delta(0.5);
+
+        assertThat(temperatureInC.as(Temperature.KELVIN).getNumber().doubleValue()).isEqualTo(274.81, delta);
+        assertThat(temperatureInC.as(Temperature.KELVIN).getUnit().getSymbol()).isEqualTo("K");
+    }
+
+    @Test
+    public void testConversionCtoF() {
+        Temperature temperatureInC = new Temperature(35, Temperature.CELSIUS);
+        assertThat(temperatureInC.as(Temperature.FAHRENHEIT).value().doubleValue()).isEqualTo(95.0, Delta.delta(0.2));
+
+        Temperature temperatureInF = new Temperature(95, Temperature.FAHRENHEIT);
+        assertThat(temperatureInF.as(Temperature.CELSIUS).value().doubleValue()).isEqualTo(35.0, Delta.delta(0.2));
+    }
 }

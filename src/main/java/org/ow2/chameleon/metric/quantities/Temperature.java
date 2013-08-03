@@ -15,7 +15,9 @@
 package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
+import org.ow2.chameleon.metric.TransformedUnitBuilder;
 import org.ow2.chameleon.metric.Unit;
+import org.ow2.chameleon.metric.units.SI;
 
 /**
  * This class represents the temperature quantity. It defines its Unit, symbol name
@@ -24,6 +26,24 @@ import org.ow2.chameleon.metric.Unit;
  * @author jeremy.savonet@gmail.com
  */
 public class Temperature extends Quantity<Temperature> {
+
+    public static Unit<Temperature> KELVIN = SI.KELVIN;
+    public static Unit<Temperature> CELSIUS =
+            new TransformedUnitBuilder<Temperature>(KELVIN)
+                    .symbol("°C")
+                    .name("Celsius")
+                    .add(273.15)
+                    .registerConverter()
+                    .build();
+
+    public static Unit<Temperature> FAHRENHEIT =
+            new TransformedUnitBuilder<Temperature>(KELVIN)
+                    .symbol("°F")
+                    .name("Fahrenheit")
+                    .times(5d / 9d)
+                    .add(+459.67)
+                    .registerConverter()
+                    .build();
 
     /**
      * @param number
