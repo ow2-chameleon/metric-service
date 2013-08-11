@@ -161,6 +161,6 @@ public class Dimension implements Comparable<Dimension> {
 
     @Override
     public int compareTo(Dimension o) {
-       return Character.valueOf(symbol).compareTo(Character.valueOf(o.symbol));
+       return Character.valueOf(symbol).compareTo(o.symbol);
     }
 }
