@@ -1,0 +1,89 @@
+# Quantities
+
+A <a href="apidocs/org/ow2/chameleon/Quantity.html">quantity</a> represents an amount of a certain type of data
+(kind). A quantity is represented by value (Number) and an Unit. As measures, quantities are immutable.
+
+Quantity's kinds
+----------------
+
+Each quantity have a `kind`. For instance: Illuminance, Velocity, Mass are kinds. Only quantities of the same kind
+are comparable, can be added or substracted.
+
+Each kind is represented by a class. The package `org.ow2.chameleon.metric.quantities` contains the quantities
+provided by the library. The following class gives an example of kind of quantity.
+
+    public class Angle extends Quantity<Angle> {
+
+        public static Unit<Angle> RADIAN = MetricService.getInstance().getSystemOfUnits("SI").getUnitByName("radian");
+
+        public static Unit<Angle> STERADIAN = MetricService.getInstance().getSystemOfUnits("SI").getUnitByName("steradian");
+
+        public Angle(Number number, Unit<Angle> unit) {
+           super(number, unit);
+        }
+    }
+
+It is recommended to declare the units associated to the kind in the class. In the previous example,
+the radian and steradian units are declared and so are easily accessible.
+
+Obviously you can implement your own kind.
+
+
+Creating quantities
+-------------------
+
+There are several ways to create quantities: from the quantity kind or from the quantity class.
+
+Using the quantity's kind is the easiest way to create a quantity.
+
+    Quantity<Force> force = new Force(10.0, Force.NEWTON);
+
+Alternatively, you can create a quantity directly from the Quantity class.
+
+    Quantity<Force> force = Quantity.valueOf(10.0, Force.NEWTON);
+
+Manipulating quantities
+-----------------------
+
+Quantities from the same kind can be added or subtracted. The results always a **new** quantity object:
+
+    Quantity<Mass> mass1 = new Mass(10); // Use the default mass unit (gram)
+    Quantity<Mass> mass2 = new Mass(10, Mass.GRAM);
+
+    Quantity<Mass> mass3 = mass1.add(mass2);
+    Quantity<Mass> mass4 = mass1.sub(mass2);
+
+Quantities can also be multiplicand by a constant:
+
+    Quantity<Mass> kilo = (new Mass(1)).times(1000);
+
+Comparing quantities
+--------------------
+
+<strong>TODO</strong>
+
+Converting quantities
+---------------------
+
+Quantities can be converted to another unit. Notice that conversion are possible only if a known converter or a chain
+of known converters exist. (A known converter is a converter registered in the conversion engine). Converter are
+often declared when declaring a _transformed_ or a _prefixed_ unit.
+
+Conversions are very simple to use:
+
+    Quantity<Mass> mass = new Mass(100, Mass.GRAM);
+    Quantity<Mass> converted = mass.as(Mass.KILOGRAM); // converted.value=0.1, converted.unit=kg
+
+Notice that, as for manipulation operations, conversions return new quantities objects.
+
+    Quantity<Temperature> temperatureInK = new Temperature(1000, Temperature.KELVIN);
+    Quantity<Temperature> temperatureInF = temperatureInK.as(Temperature.FAHRENHEIT);
+
+
+
+
+
+
+
+
+

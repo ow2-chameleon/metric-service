@@ -17,7 +17,7 @@ package org.ow2.chameleon.metric.quantities;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.TransformedUnitBuilder;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the mass quantity. It defines its Unit, symbol name
@@ -28,42 +28,7 @@ import org.ow2.chameleon.metric.units.SI;
 public class Mass extends Quantity<Mass> {
 
     public static final Unit<Mass> GRAM = SI.GRAM;
-
-    public static final Unit<Mass> KILOGRAM = new TransformedUnitBuilder<Mass>(GRAM)
-            .times(1000)
-            .symbol("kg")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Mass> HECTOGRAM = new TransformedUnitBuilder<Mass>(GRAM)
-            .times(100)
-            .symbol("hg")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Mass> DECIGRAM = new TransformedUnitBuilder<Mass>(GRAM)
-            .times(0.1)
-            .symbol("dg")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Mass> CENTIGRAM = new TransformedUnitBuilder<Mass>(GRAM)
-            .times(0.01)
-            .symbol("cg")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Mass> MILLIGRAM = new TransformedUnitBuilder<Mass>(GRAM)
-            .times(0.001)
-            .symbol("mg")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Mass> MICROGRAM = new TransformedUnitBuilder<Mass>(GRAM)
-            .times(0.000001)
-            .symbol("µg")
-            .registerConverter()
-            .build();
+    public static final Unit<Mass> KILOGRAM = SI.getSI().getUnitBySymbol("kg");
 
     /**
      * @param number
@@ -79,15 +44,5 @@ public class Mass extends Quantity<Mass> {
 
     public Mass(Number number) {
         super(Mass.class, number, GRAM);
-    }
-
-    public Mass add(Mass that) {
-        Quantity<Mass> l = this.add((Quantity<Mass>) that);
-        return new Mass(l);
-    }
-
-    public Mass sub(Mass that) {
-        Mass s = new Mass(-1 * that.value().doubleValue(), that.unit());
-        return this.add(s);
     }
 }

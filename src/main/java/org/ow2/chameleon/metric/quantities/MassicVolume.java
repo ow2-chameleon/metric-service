@@ -14,10 +14,10 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.ow2.chameleon.metric.DerivedUnitBuilder;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the massic volume quantity. It defines its Unit, symbol name
@@ -27,16 +27,18 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class MassicVolume extends Quantity<MassicVolume> {
 
-    public static final Unit<MassicVolume> MASSIC_VOLUME_UNIT = new UnitBuilder<MassicVolume>()
-            .from(SI.GRAM).pow(SI.METER, -3)
+    public static final Unit<MassicVolume> MASSIC_VOLUME_UNIT = new DerivedUnitBuilder<MassicVolume>()
+            .from(SI.GRAM).pow(SI.METRE, -3)
             .name("massic volume")
             .symbol("g/m3")
+            .addToSystem("SI")
             .build();
 
-    public static final Unit<MassicVolume> MASSIC_VOLUME_UNIT_FOR_GAZ = new UnitBuilder<MassicVolume>()
-            .from(Mass.MICROGRAM).pow(SI.METER, -3)
+    public static final Unit<MassicVolume> MASSIC_VOLUME_UNIT_FOR_GAZ = new DerivedUnitBuilder<MassicVolume>()
+            .from(SI.getSI().<Mass>getUnitBySymbol("µg")).pow(SI.METRE, -3)
             .name("massic volume")
             .symbol("µg/m3")
+            .addToSystem("SI")
             .build();
 
     /**

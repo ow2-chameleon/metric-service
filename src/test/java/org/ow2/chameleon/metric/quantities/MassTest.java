@@ -14,7 +14,8 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.Quantity;
+import org.ow2.chameleon.metric.systems.SI;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -52,8 +53,8 @@ public class MassTest {
 
         // Additions
 
-        Mass l12 = l1.add(l2);
-        Mass l21 = l2.add(l1);
+        Quantity<Mass> l12 = l1.add(l2);
+        Quantity<Mass> l21 = l2.add(l1);
 
         assertThat(l12.getNumber()).isEqualTo(20.0);
         assertThat(l21.getNumber()).isEqualTo(20.0);
@@ -62,12 +63,26 @@ public class MassTest {
 
         // Subtractions
 
-        Mass l_12 = l1.sub(l2);
-        Mass l_21 = l2.sub(l1);
+        Quantity<Mass> l_12 = l1.sub(l2);
+        Quantity<Mass> l_21 = l2.sub(l1);
 
         assertThat(l_12.getNumber()).isEqualTo(0.0);
         assertThat(l_21.getNumber()).isEqualTo(0.0);
         assertThat(l_12.getUnit()).isEqualTo(SI.GRAM);
         assertThat(l_21.getUnit()).isEqualTo(SI.GRAM);
+    }
+
+    @Test
+    public void testConversion() {
+        Quantity<Mass> mass1 = new Quantity<Mass>(1000, Mass.GRAM);
+        Quantity<Mass> mass2 = new Quantity<Mass>(1, Mass.KILOGRAM);
+
+        assertThat(mass1.as(Mass.KILOGRAM).value().doubleValue()).isEqualTo(1.0);
+        assertThat(mass2.as(Mass.GRAM).value().doubleValue()).isEqualTo(1000.0);
+
+        assertThat(mass1.as(Mass.GRAM).value().doubleValue()).isEqualTo(1000.0);
+
+
+
     }
 }

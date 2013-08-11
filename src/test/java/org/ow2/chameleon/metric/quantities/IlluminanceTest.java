@@ -15,9 +15,8 @@
 package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.Angle;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.DerivedUnitBuilder;
+import org.ow2.chameleon.metric.systems.SI;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -47,8 +46,8 @@ public class IlluminanceTest {
         Illuminance illuminance1 = new Illuminance(10);
 
         Quantity<Illuminance> illuminance2 = new Quantity<Illuminance>(Illuminance.class,10,
-                new UnitBuilder<Illuminance>()
-                        .from(SI.CANDELA).times(Angle.STERADIAN).pow(SI.METER, -2)
+                new DerivedUnitBuilder<Illuminance>()
+                        .from(SI.CANDELA).times(Angle.STERADIAN).pow(SI.METRE, -2)
                         .name("lux")
                         .symbol("lx").build());
 

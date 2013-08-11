@@ -14,24 +14,18 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.ow2.chameleon.metric.MetricService;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
 
 /**
  * This class represents the force quantity. It defines its Unit, symbol name
  * and methods to initialize the quantity.
- *
- * @author jeremy.savonet@gmail.com
  */
 public class Force extends Quantity<Force> {
 
-    public static final Unit<Force> NEWTON = new UnitBuilder<Force>()
-            .from(Mass.KILOGRAM).times(SI.METER).pow(SI.SECOND, -2)
-            .name("newton")
-            .symbol("N")
-            .build();
+    public static final Unit<Force> NEWTON = MetricService.getInstance().getSystemOfUnits("SI").getUnitByName
+            ("newton");
 
     /**
      * @param number

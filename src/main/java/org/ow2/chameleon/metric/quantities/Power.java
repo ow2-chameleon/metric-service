@@ -16,8 +16,7 @@ package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the power quantity. It defines its Unit, symbol name
@@ -27,22 +26,18 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Power extends Quantity<Power> {
 
-    public static final Unit<Power> WATT = new UnitBuilder<Power>()
-            .from(Energy.JOULE).pow(SI.SECOND, -1)
-            .name("watt")
-            .symbol("W")
-            .build();
+    public static final Unit<Power> WATT = SI.getSI().getUnitByName("watt");
 
     /**
      * @param number
      * @param unit
      */
     public Power(Number number, Unit<Power> unit) {
-        super(Power.class, number, unit);
+        super(number, unit);
     }
 
     public Power(Number number) {
-        super(Power.class, number, WATT);
+        super(number, WATT);
     }
 
 

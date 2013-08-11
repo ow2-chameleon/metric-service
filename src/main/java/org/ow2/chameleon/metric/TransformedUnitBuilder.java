@@ -30,6 +30,7 @@ public class TransformedUnitBuilder<Q extends Quantity<Q>> {
 
     private ConversionFunction conversion = Identity.IDENTITY;
     private boolean registerConverter = false;
+    private String system;
 
     public TransformedUnitBuilder(Unit<Q> from) {
         this.from = from;
@@ -39,7 +40,7 @@ public class TransformedUnitBuilder<Q extends Quantity<Q>> {
 
     }
 
-    public TransformedUnitBuilder<Q> from(Unit from) {
+    public TransformedUnitBuilder<Q> from(Unit<Q> from) {
         this.from = from;
         return this;
     }
@@ -59,16 +60,28 @@ public class TransformedUnitBuilder<Q extends Quantity<Q>> {
             throw new IllegalArgumentException("An unit must have a symbol");
         }
 
+        Unit<Q> unit;
         if (conversion == Identity.IDENTITY) {
-            return new Unit<Q>(symbol, name);
+            unit = new Unit<Q>(symbol, name);
         } else {
             // Transformed unit
-            Unit<Q> unit =  new TransformedUnit<Q>(symbol, name, from, conversion);
+            unit =  new TransformedUnit<Q>(symbol, name, from, conversion);
             if (registerConverter) {
-                ConverterRegistry.addConverter(new FunctionBasedConverter<Q>(unit, from, conversion));
+                MetricService.getInstance().getConverterRegistry().addConverter(new FunctionBasedConverter<Q>(unit, from, conversion));
             }
-            return unit;
         }
+
+        if (system != null) {
+            SystemOfUnits systemOfUnits = MetricService.getInstance().getSystemOfUnits(system);
+            if (systemOfUnits == null) {
+                throw new IllegalArgumentException("Cannot register the unit to " + system + " - unknown system of " +
+                        "units");
+            }
+            systemOfUnits.addUnitToSystem(unit);
+        }
+
+        return unit;
+
     }
 
     public TransformedUnitBuilder<Q> add(Number constant) {
@@ -81,8 +94,13 @@ public class TransformedUnitBuilder<Q extends Quantity<Q>> {
         return this;
     }
 
-    public TransformedUnitBuilder<Q> registerConverter() {
+    public TransformedUnitBuilder<Q> withConverter() {
         registerConverter = true;
+        return this;
+    }
+
+    public TransformedUnitBuilder<Q> addToSystem(String system) {
+        this.system = system;
         return this;
     }
 }

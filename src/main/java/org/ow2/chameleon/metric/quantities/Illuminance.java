@@ -16,9 +16,7 @@ package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.Angle;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the illuminance quantity. It defines its Unit, symbol name
@@ -28,11 +26,7 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Illuminance extends Quantity<Illuminance> {
 
-    public static final Unit<Illuminance> LUX = new UnitBuilder<Illuminance>()
-            .from(SI.CANDELA).times(Angle.STERADIAN).pow(SI.METER, -2)
-            .name("lux")
-            .symbol("lx")
-            .build();
+    public static final Unit<Illuminance> LUX = SI.getSI().getUnitByName("lux");
 
     /**
      * @param number

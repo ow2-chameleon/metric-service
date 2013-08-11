@@ -14,10 +14,9 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.ow2.chameleon.metric.MetricService;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
 
 /**
  * This class represents the frequency quantity. It defines its Unit, symbol name
@@ -27,21 +26,18 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Frequency extends Quantity<Frequency> {
 
-    public static final Unit<Frequency> HERTZ = new UnitBuilder<Frequency>()
-            .pow(SI.SECOND, -1)
-            .name("Frequency")
-            .symbol("Hz")
-            .build();
+    public static final Unit<Frequency> HERTZ = MetricService.getInstance().getSystemOfUnits("SI").getUnitBySymbol
+            ("Hz");
 
     /**
      * @param number
      * @param unit
      */
     public Frequency(Number number, Unit<Frequency> unit) {
-        super(Frequency.class, number, unit);
+        super(number, unit);
     }
 
     public Frequency(Number number) {
-        super(Frequency.class, number, HERTZ);
+        super(number, HERTZ);
     }
 }

@@ -16,8 +16,7 @@ package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the energy quantity. It defines its Unit, symbol name
@@ -27,11 +26,7 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Energy extends Quantity<Energy> {
 
-    public static final Unit<Energy> JOULE = new UnitBuilder<Energy>()
-            .from(Force.NEWTON).times(SI.METER)
-            .name("joule")
-            .symbol("J")
-            .build();
+    public static final Unit<Energy> JOULE = SI.getSI().getUnitByName("joule");
 
     /**
      * @param number

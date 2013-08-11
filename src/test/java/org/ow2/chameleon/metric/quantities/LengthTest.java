@@ -14,7 +14,7 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -32,7 +32,7 @@ public class LengthTest {
     @Test
     public void testLengthsUsingSameUnit() {
         Length l1 = new Length(10);
-        Length l2 = new Length(10, SI.METER);
+        Length l2 = new Length(10, SI.METRE);
         Length l3 = new Length(10, Length.METER);
 
         assertThat(l1.value()).isEqualTo(10);
@@ -47,9 +47,9 @@ public class LengthTest {
         assertThat(l2.getNormalizedQuantity().getNumber()).isEqualTo(10);
         assertThat(l3.getNormalizedQuantity().getNumber()).isEqualTo(10);
 
-        assertThat(l1.getNormalizedQuantity().getUnit()).isEqualTo(SI.METER);
-        assertThat(l2.getNormalizedQuantity().getUnit()).isEqualTo(SI.METER);
-        assertThat(l3.getNormalizedQuantity().getUnit()).isEqualTo(SI.METER);
+        assertThat(l1.getNormalizedQuantity().getUnit()).isEqualTo(SI.METRE);
+        assertThat(l2.getNormalizedQuantity().getUnit()).isEqualTo(SI.METRE);
+        assertThat(l3.getNormalizedQuantity().getUnit()).isEqualTo(SI.METRE);
 
         // Additions
 
@@ -58,8 +58,8 @@ public class LengthTest {
 
         assertThat(l12.getNumber()).isEqualTo(20.0);
         assertThat(l21.getNumber()).isEqualTo(20.0);
-        assertThat(l12.getUnit()).isEqualTo(SI.METER);
-        assertThat(l21.getUnit()).isEqualTo(SI.METER);
+        assertThat(l12.getUnit()).isEqualTo(SI.METRE);
+        assertThat(l21.getUnit()).isEqualTo(SI.METRE);
 
         // Subtractions
 
@@ -68,8 +68,8 @@ public class LengthTest {
 
         assertThat(l_12.getNumber()).isEqualTo(0.0);
         assertThat(l_21.getNumber()).isEqualTo(0.0);
-        assertThat(l_12.getUnit()).isEqualTo(SI.METER);
-        assertThat(l_21.getUnit()).isEqualTo(SI.METER);
+        assertThat(l_12.getUnit()).isEqualTo(SI.METRE);
+        assertThat(l_21.getUnit()).isEqualTo(SI.METRE);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class LengthTest {
 
         Length l3 = l1.add(l2);
         assertThat(l3.getNumber()).isEqualTo(2000.0);
-        assertThat(l3.getUnit()).isEqualTo(SI.METER);
+        assertThat(l3.getUnit()).isEqualTo(SI.METRE);
 
         assertThat(l3.as(Length.KILOMETER).getNumber()).isEqualTo(2.0);
         assertThat(l1.as(Length.KILOMETER).getNumber()).isEqualTo(1.0);
@@ -93,9 +93,9 @@ public class LengthTest {
 
         Length k = new Length(1, Length.KILOMETER);
         Length m = new Length(1, Length.METER);
-        Length d = new Length(2, Length.DECIMETER);
+        Length d = new Length(2, SI.getSI().<Length>getUnitBySymbol("dm"));
 
-        assertThat(k.as(Length.HECTOMETER).getNumber()).isEqualTo(10.0);
+        assertThat(k.as(SI.getSI().<Length>getUnitBySymbol("hm")).getNumber()).isEqualTo(10.0);
         assertThat(d.as(Length.CENTIMETER).getNumber()).isEqualTo(20.0);
         assertThat(d.as(Length.MILLIMETER).getNumber()).isEqualTo(200.0);
 

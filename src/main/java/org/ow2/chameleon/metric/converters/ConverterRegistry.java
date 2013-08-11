@@ -24,13 +24,14 @@ import java.util.Map;
 
 /**
  * Converter registry.
+ * Must be accesses from the MetricService instance.
  */
 public class ConverterRegistry {
 
-    private static final List<QuantityConverter<?>> registry = new ArrayList<QuantityConverter<?>>();
-    private static final Object lock = new Object();
+    private final List<QuantityConverter<?>> registry = new ArrayList<QuantityConverter<?>>();
+    private final Object lock = new Object();
 
-    public static <Q extends Quantity<Q>> QuantityConverter<Q> findConverter(Unit<Q> in, Unit<Q> out) {
+    public <Q extends Quantity<Q>> QuantityConverter<Q> findConverter(Unit<Q> in, Unit<Q> out) {
         List<QuantityConverter<Q>> chain = traverse(in, out);
         if (chain == null) {
             return null;
@@ -40,7 +41,7 @@ public class ConverterRegistry {
 
     }
 
-    public static <Q extends Quantity<Q>> List<QuantityConverter<Q>> traverse(Unit<Q> from, Unit<Q> to) {
+    public <Q extends Quantity<Q>> List<QuantityConverter<Q>> traverse(Unit<Q> from, Unit<Q> to) {
 
         LinkedList<Unit<Q>> queue = new LinkedList<Unit<Q>>();
         queue.add(from);
@@ -69,7 +70,7 @@ public class ConverterRegistry {
 
     }
 
-    private static <Q extends Quantity<Q>> List<QuantityConverter<Q>> buildChainFromTraces(Map<Unit<Q>, Unit<Q>> preds,
+    private <Q extends Quantity<Q>> List<QuantityConverter<Q>> buildChainFromTraces(Map<Unit<Q>, Unit<Q>> preds,
                                                                                            Unit<Q> from,
                                                                                            Unit<Q> to) {
         LinkedList<QuantityConverter<Q>> chain = new LinkedList<QuantityConverter<Q>>();
@@ -99,7 +100,7 @@ public class ConverterRegistry {
 
     }
 
-    private static <Q extends Quantity<Q>> List<QuantityConverter<Q>> getConvertersFrom(Unit<Q> unit) {
+    private <Q extends Quantity<Q>> List<QuantityConverter<Q>> getConvertersFrom(Unit<Q> unit) {
         List<QuantityConverter<Q>> converters = new ArrayList<QuantityConverter<Q>>();
         synchronized (lock) {
             for (QuantityConverter converter : registry) {
@@ -115,7 +116,7 @@ public class ConverterRegistry {
         return converters;
     }
 
-    private static <Q extends Quantity<Q>> QuantityConverter<Q> getConvertersFromTo(Unit<Q> from, Unit<Q> to) {
+    private <Q extends Quantity<Q>> QuantityConverter<Q> getConvertersFromTo(Unit<Q> from, Unit<Q> to) {
         List<QuantityConverter<Q>> converters = getConvertersFrom(from);
         for (QuantityConverter<Q> converter : converters) {
             if (converter.to().equals(to)) {
@@ -125,7 +126,7 @@ public class ConverterRegistry {
         return null;
     }
 
-    public static void addConverter(QuantityConverter<?> converter) {
+    public void addConverter(QuantityConverter<?> converter) {
         synchronized (lock) {
             if (!registry.contains(converter)) {
                 registry.add(converter);
@@ -133,13 +134,13 @@ public class ConverterRegistry {
         }
     }
 
-    public static void removeConverter(QuantityConverter<?> converter) {
+    public void removeConverter(QuantityConverter<?> converter) {
         synchronized (lock) {
             registry.remove(converter);
         }
     }
 
-    public static List<QuantityConverter<?>> getConverters() {
+    public List<QuantityConverter<?>> getConverters() {
         List<QuantityConverter<?>> converters = new ArrayList<QuantityConverter<?>>();
         synchronized (lock) {
             for (QuantityConverter converter : registry) {

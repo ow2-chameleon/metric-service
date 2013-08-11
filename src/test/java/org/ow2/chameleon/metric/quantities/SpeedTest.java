@@ -30,15 +30,15 @@ public class SpeedTest {
 
     @Test
     public void testSpeed() {
-        Speed Speed1 = new Speed(10);
+        Velocity Speed1 = new Velocity(10);
 
-        Speed Speed2 = new Speed(10, Speed.SPEED);
+        Velocity Speed2 = new Velocity(10, Velocity.METRE_PER_SECOND);
 
         assertThat(Speed1.getUnit().isCompatible(Speed2.getUnit()));
         assertThat(Speed1.getUnit().getDimension()).isEqualTo(Speed2.getUnit().getDimension());
 
-        Quantity<Speed> result = Speed1.add(Speed2);
+        Quantity<Velocity> result = Speed1.add(Speed2);
         assertThat(result.getNumber()).isEqualTo(20.0);
-        assertThat(result.getUnit()).isEqualTo(Speed.SPEED);
+        assertThat(result.getUnit()).isEqualTo(Velocity.METRE_PER_SECOND);
     }
 }

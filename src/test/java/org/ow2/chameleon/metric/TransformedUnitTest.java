@@ -15,7 +15,7 @@
 package org.ow2.chameleon.metric;
 
 import org.ow2.chameleon.metric.quantities.Temperature;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
@@ -46,7 +46,7 @@ public class TransformedUnitTest {
 
     @Test
     public void testGrade() {
-        Unit rad = new UnitBuilder().symbol("rad").name("radian").from(SI.METER).divide(SI.METER).build();
+        Unit rad = new DerivedUnitBuilder().symbol("rad").name("radian").from(SI.METRE).dividedBy(SI.METRE).build();
         assertThat(rad.getDimension()).isEqualTo(Dimension.NONE);
 
         Unit grad = new TransformedUnitBuilder(rad).symbol("gr").name("grade").times(Math.PI).times(2d).times

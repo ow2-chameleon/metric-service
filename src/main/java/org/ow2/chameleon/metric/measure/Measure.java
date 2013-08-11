@@ -30,7 +30,7 @@ import java.util.Date;
  * /!\ A measure is immutable /!\
  *
  * Be aware that a value may contain an illegal value to reflect a not captured / not correctly measured value.
- * In this case, and only in this case, a specific quantity `NOT_CAPTURED` is used.
+ * In this case, and only in this case, a specific quantity `NOT_CAPTURED_QUANTITY` is used.
  *
  * @author jeremy.savonet@gmail.com
  */
@@ -38,9 +38,9 @@ public class Measure {
 
     /**
      * A specific quantity used for measure that are invalid (because of a device failure, or issue in the response).
-     * This quantify uses a specific unit 'void' and has a zero-value.
+     * This quantify uses a specific unit 'NaM' (not a measure) and has a zero-value.
      */
-    public static Quantity NOT_CAPTURED = Quantity.valueOf(0.0, new Unit("\u2205", "void"));
+    public static Quantity NOT_CAPTURED_QUANTITY = Quantity.valueOf(0.0, new Unit("\u2205", "NaM"));
 
     /**
      * |----------------------------------------------------------------------|
@@ -155,7 +155,7 @@ public class Measure {
         }
 
         public Builder notCaptured() {
-            this.quantity(NOT_CAPTURED);
+            this.quantity(NOT_CAPTURED_QUANTITY);
             return this;
         }
 

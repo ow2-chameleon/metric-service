@@ -14,7 +14,6 @@
  */
 package org.ow2.chameleon.metric;
 
-import org.ow2.chameleon.metric.converters.ConverterRegistry;
 import org.ow2.chameleon.metric.converters.QuantityConverter;
 
 import java.lang.reflect.ParameterizedType;
@@ -23,7 +22,8 @@ import java.lang.reflect.ParameterizedType;
  * This class defines what is a quantity. It offers methods to construct a quantity and
  * methods to build make arithmetical operations on quantities.
  *
- * @author clement
+ * @author Clement Escoffier, clement.escoffier@gamil.com
+ * @param <Q> the kind of quantity.
  */
 public class Quantity<Q extends Quantity<Q>> {
 
@@ -116,6 +116,10 @@ public class Quantity<Q extends Quantity<Q>> {
         }
     }
 
+    public Quantity<Q> sub(Quantity<Q> that) {
+        return add(that.times(-1));
+    }
+
     public Quantity<Q> times(Number number) {
         return valueOf(getNumber().doubleValue() * number.doubleValue(), getUnit());
     }
@@ -137,7 +141,31 @@ public class Quantity<Q extends Quantity<Q>> {
     public Quantity<Q> as(Unit<Q> unit) {
         // Retrieve the normalized quantity
         Quantity<Q> normalized = getNormalizedQuantity();
-        QuantityConverter<Q> converter = ConverterRegistry.findConverter(normalized.unit, unit);
+
+
+        // The conversion depends on the type of unit.
+        // Base -> Base : possible only if the two units are the same, or if their dimension are the same and not NONE.
+        // Base -> Derived : possible only if their dimensions are the same and not NONE(which would mean that the derived unit is
+        // not really a derived unit
+        // Derived -> Base : possible only if their dimensions are the same and not NONE (which would mean that the
+        // derived unit is not really a derived unit
+        // Derived -> Derived : possible only if their dimensions are the same
+        // * -> Transformed and Transformed -> * : a converter chain must exit
+
+        if (!(this.unit instanceof TransformedUnit) && !(unit instanceof  TransformedUnit)) {
+            Dimension dimension1 = this.unit.getDimension();
+            Dimension dimension2 = unit.getDimension();
+            if (! dimension1.equals(Dimension.NONE)  && ! dimension2.equals(Dimension.NONE)  && dimension1.equals
+                    (dimension2)) {
+                // this.unit and unit are actually the same.
+                return new Quantity<Q>(value(), unit);
+            }
+        }
+
+        // Fall back to the conversion chain.
+
+        QuantityConverter<Q> converter = MetricService.getInstance().getConverterRegistry()
+                .findConverter(normalized.unit, unit);
 
         if (converter == null) {
             throw new IllegalArgumentException("Cannot convert " + this + " to " + unit + " - no converter in the " +

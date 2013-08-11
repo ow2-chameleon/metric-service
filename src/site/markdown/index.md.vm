@@ -1,0 +1,121 @@
+<div style="width: 940px;">
+<header class="jumbotron subhead">
+    <div class="row" id="banner">
+        <div class="span12">
+            <div class="pull-left">
+                <a href="measure.html#" id="bannerLeft"><h1><span class="color-highlight">OW2 Chameleon</span> ~ Metric Service</h1></a>
+                <p class="lead">Units and measurement made simple.</p>
+            </div>
+            <div class="pull-right">
+            </div>
+        </div>
+    </div>
+</header>
+</div>
+
+<div class="intro">
+    <div class="span12">
+    <div class="row">
+
+        <div class="span6">
+            The <code>metric-service</code> is a simple library to manipulate:
+            <ul>
+                <li>measures</li>
+                <li>units</li>
+                <li>conversions</li>
+                <li>dimensions</li>
+            </ul>
+            <p>It also defines a set of units, and let you define your own units.</p>
+        </div>
+
+        <div class="span6">
+            <a href="http://chameleon.ow2.org">
+                <img src="img/chameleon-project.png" style="width: 60%;">
+            </a>
+        </div>
+
+    </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+
+<div class="features">
+    <div class="row">
+        <div class="span12">
+
+            <!-- Features hero -->
+            <div class="hero">
+                <!-- Title. Don't forget the <span> tag -->
+                <h3><span>Concepts</span></h3>
+                <!-- para -->
+                <p>As soon as you handle physical data, measures and units enter into the game. Unfortunately,
+                    manipulating them is often difficult and not well-understood. OW2 Chameleon metric-service
+                    provides a very simple API to manipulates such data.</p>
+            </div>
+
+            <!-- Features -->
+
+            <div class="ifeature">
+
+                <div class="ifeat">
+                    <div class="row">
+                        <div class="span6">
+                            <h4>Measure</h4>
+                            <p>A <code>measure</code> is a <code>quantity</code> taken at a specific time,
+                                with a potential deviation (delta).</p>
+                            <p>Metric-Service makes creating and manipulating measures easy as pie.</p>
+                            <div class="button"><a href="#">Read more...</a></div>
+                        </div>
+                        <div class="span6">
+                            <h4>Quantities</h4>
+                            <p>A <code>quantity</code> is composed by a value and an unit. Quantities are organized
+                                by category such as length, mass, illuminance,  electric potential. On quantity
+                                belonging to the  same category are comparable.
+                            </p>
+                            <div class="button"><a href="#">Read more</a></div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+                <div class="ifeat">
+                    <div class="row">
+                        <div class="span6">
+                            <h4>Units</h4>
+                            <p>A <code>unit</code> of measurement is a definite magnitude of physical quantity. Lots
+                                of units are specified. The library let you reuse defined ones,
+                                create new ones and manage conversions.</p>
+                            <div class="button"><a href="#">Read more</a></div>
+                        </div>
+                        <div class="span6">
+                            <h4>Standalone, JavaEE and OSGi-friendly</h4>
+                            <p>The library is packaged in an OSGi bundle. Thus it can be used in an OSGi
+                                applications, but also in regular Java applications or in JavaEE applications. Just
+                                use whatever environment you want.
+                            </p>
+                            <div class="button"><a href="#">Read more</a></div>
+                        </div>
+                        <div class="Read more"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="license">
+    <div class="row">
+        <div class="span12">
+
+            <!-- Features hero -->
+            <div class="hero">
+                <!-- Title. Don't forget the <span> tag -->
+                <h3><span>License</span></h3>
+                <!-- para -->
+                <p>The library is part of the OW2 Chameleon project and is licensed under the Apache Software
+                    License 2.0.</p>
+            </div>
+        </div>
+    </div>
+</div>

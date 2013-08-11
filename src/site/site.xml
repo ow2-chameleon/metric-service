@@ -1,0 +1,146 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/DECORATION/1.3.0"
+         xsi:schemaLocation="http://maven.apache.org/DECORATION/1.3.0 http://maven.apache.org/xsd/decoration-1.3.0.xsd"
+        >
+
+    <skin>
+        <groupId>lt.velykis.maven.skins</groupId>
+        <artifactId>reflow-maven-skin</artifactId>
+        <version>1.0.0</version>
+    </skin>
+
+    <publishDate position="bottom" format="yyyy-MM-dd"/>
+    <version position="bottom"/>
+
+    <custom>
+        <reflowSkin>
+            <protocolRelativeURLs>false</protocolRelativeURLs>
+            <smoothScroll>true</smoothScroll>
+
+            <theme>site</theme>
+
+            <highlightJs>true</highlightJs>
+            <highlightJsTheme>github</highlightJsTheme>
+
+            <brand>
+                <name>
+                    <![CDATA[
+                        <span class="color-highlight">OW2 Chameleon</span> ~ Metric Service
+                    ]]>
+                </name>
+                <href>index.html</href>
+            </brand>
+
+            <slogan>Units and measurement made simple.</slogan>
+
+            <titleTemplate>%2$s | %1$s</titleTemplate>
+
+            <toc>sidebar</toc>
+            <tocTopMax>6</tocTopMax>
+            <topNav>Documentation|Contribute</topNav>
+            <navbarInverse>true</navbarInverse>
+
+            <bottomNav maxSpan="9" >
+                <column>Main|Download</column>
+                <column>Contribute</column>
+                <column>Documentation</column>
+            </bottomNav>
+            <bottomDescription>
+                <![CDATA[
+          <span class="color-highlight">OW2 Chameleon</span> ~ metric service is a simple library to manipulate measures,
+          units and dimensions.
+        ]]>
+            </bottomDescription>
+
+            <breadcrumbs>false</breadcrumbs>
+
+            <pages>
+
+                <index project="metric-service">
+                    <!-- Override the title -->
+                    <titleTemplate>OW2 Chameleon ~ Metric Service</titleTemplate>
+                    <!-- no breadcrumbs on the main index page -->
+                    <!-- no ToC on the main index page -->
+                    <toc>false</toc>
+                    <markPageHeader>false</markPageHeader>
+                    <sections>
+                        <body />
+                        <sidebar />
+                    </sections>
+                </index>
+                <contribute>
+                    <breadcrumbs>false</breadcrumbs>
+                </contribute>
+
+                <!-- Disable source highlighting for Maven reports -->
+                <source-repository>
+                    <highlightJs>false</highlightJs>
+                </source-repository>
+                <issue-tracking>
+                    <highlightJs>false</highlightJs>
+                    <toc>false</toc>
+                </issue-tracking>
+                <license>
+                    <highlightJs>false</highlightJs>
+                    <toc>false</toc>
+                </license>
+                <!-- Disable ToC for some Maven reports -->
+                <project-info>
+                    <toc>false</toc>
+                </project-info>
+                <dependencies>
+                    <tocTopMax>4</tocTopMax>
+                </dependencies>
+
+
+            </pages>
+
+            <skinAttribution>false</skinAttribution>
+
+        </reflowSkin>
+    </custom>
+
+    <body>
+        <head>
+            <link type="text/css" href="css/orange.css" rel="stylesheet" media="screen"/>
+            <link type="text/css" href="css/style.css" rel="stylesheet" media="screen"/>
+        </head>
+
+
+        <links>
+            <item name="Download" href="download.html" />
+            <item name="GitHub project" href="http://github.com/ow2-chameleon/metric-service" />
+        </links>
+
+        <breadcrumbs>
+            <item name="metric-service" href="/" />
+        </breadcrumbs>
+
+        <menu name="Main">
+            <item name="Home" href="./" />
+            <item name="GitHub project" href="http://github.com/ow2-chameleon/metric-service" />
+            <item name="Release notes" href="github-report.html" />
+        </menu>
+
+        <menu name="Documentation" inherit="bottom">
+            <item name="Measures" href="measures.html"/>
+            <item name="Quantities" href="quantities.html"/>
+            <item name="Units" href="units.html"/>
+            <item name="Systems of units" href="systemsOfUnits.html"/>
+            <item name="API" href="apidocs/index.html"/>
+        </menu>
+
+
+        <menu name="Download" inherit="top">
+            <item name="Download" href="download.html" />
+            <item name="License" href="license.html" />
+        </menu>
+
+        <menu name="Contribute" inherit="bottom">
+            <item name="Contribute" href="contribution.html" />
+            <item name="Sources" href="source-repository.html"/>
+            <item name="Issues" href="http://github.com/ow2-chameleon/metric-service/issues/" />
+            <item name="Fork on GitHub" href="http://github.com/ow2-chameleon/metric-service" />
+        </menu>
+
+    </body>
+</project>

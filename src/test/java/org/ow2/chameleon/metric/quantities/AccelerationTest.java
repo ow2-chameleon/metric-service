@@ -32,13 +32,13 @@ public class AccelerationTest {
     public void testAcceleration() {
         Acceleration acceleration1 = new Acceleration(10);
 
-        Acceleration acceleration2 = new Acceleration(10, Acceleration.ACCELERATION);
+        Acceleration acceleration2 = new Acceleration(10, Acceleration.METRE_PER_SECOND_SQUARED);
 
         assertThat(acceleration1.getUnit().isCompatible(acceleration2.getUnit()));
         assertThat(acceleration1.getUnit().getDimension()).isEqualTo(acceleration2.getUnit().getDimension());
 
         Quantity<Acceleration> result = acceleration1.add(acceleration2);
         assertThat(result.getNumber()).isEqualTo(20.0);
-        assertThat(result.getUnit()).isEqualTo(Acceleration.ACCELERATION);
+        assertThat(result.getUnit()).isEqualTo(Acceleration.METRE_PER_SECOND_SQUARED);
     }
 }

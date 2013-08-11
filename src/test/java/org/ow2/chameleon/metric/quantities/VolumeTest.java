@@ -32,13 +32,13 @@ public class VolumeTest {
     public void testVolume() {
         Volume Volume1 = new Volume(10);
 
-        Volume Volume2 = new Volume(10, Volume.SQUARE_METER);
+        Volume Volume2 = new Volume(10, Volume.CUBIC_METRE);
 
         assertThat(Volume1.getUnit().isCompatible(Volume2.getUnit()));
         assertThat(Volume1.getUnit().getDimension()).isEqualTo(Volume2.getUnit().getDimension());
 
         Quantity<Volume> result = Volume1.add(Volume2);
         assertThat(result.getNumber()).isEqualTo(20.0);
-        assertThat(result.getUnit()).isEqualTo(Volume.SQUARE_METER);
+        assertThat(result.getUnit()).isEqualTo(Volume.CUBIC_METRE);
     }
 }

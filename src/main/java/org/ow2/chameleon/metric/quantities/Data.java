@@ -31,25 +31,25 @@ public class Data extends Quantity<Data> {
     public static final Unit<Data> KILOBIT = new TransformedUnitBuilder<Data>(BIT)
             .times(1024)
             .symbol("Kb")
-            .registerConverter()
+            .withConverter()
             .build();
 
     public static final Unit<Data> MEGABIT = new TransformedUnitBuilder<Data>(KILOBIT)
             .times(1024)
             .symbol("Mb")
-            .registerConverter()
+            .withConverter()
             .build();
 
     public static final Unit<Data> GIGABIT = new TransformedUnitBuilder<Data>(MEGABIT)
             .times(1024)
             .symbol("Gb")
-            .registerConverter()
+            .withConverter()
             .build();
 
     public static final Unit<Data> TERAGABIT = new TransformedUnitBuilder<Data>(GIGABIT)
             .times(1024)
             .symbol("Tb")
-            .registerConverter()
+            .withConverter()
             .build();
 
     /**

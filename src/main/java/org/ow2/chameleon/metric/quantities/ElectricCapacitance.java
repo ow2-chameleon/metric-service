@@ -12,36 +12,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+
 package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
- * This class represents the speed quantity. It defines its Unit, symbol name
- * and methods to initialize the quantity.
- *
- * @author jeremy.savonet@gmail.com
+ * Represents an electric capacitance, generally in Farad.
  */
-public class Speed extends Quantity<Speed> {
+public class ElectricCapacitance extends Quantity<ElectricCapacitance> {
 
-    public static final Unit<Speed> SPEED = new UnitBuilder<Speed>()
-            .from(SI.METER).pow(SI.SECOND, -1)
-            .name("Speed")
-            .symbol("m/s")
-            .build();
+    public static final Unit<ElectricCapacitance> FARAD = SI.getSI().getUnitByName("farad");
 
-    /**
-     * @param number
-     * @param unit
-     */
-    public Speed(Number number, Unit<Speed> unit) {
-        super(Speed.class, number, unit);
-    }
-
-    public Speed(Number number) {
-        super(Speed.class, number, SPEED);
+    public ElectricCapacitance(Number number, Unit<ElectricCapacitance> unit) {
+        super(number, unit);
     }
 }

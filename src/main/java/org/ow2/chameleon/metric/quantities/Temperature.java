@@ -17,7 +17,7 @@ package org.ow2.chameleon.metric.quantities;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.TransformedUnitBuilder;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the temperature quantity. It defines its Unit, symbol name
@@ -39,7 +39,7 @@ public class Temperature extends Quantity<Temperature> {
                     .symbol("\u2103")
                     .name("Celsius")
                     .add(273.15)
-                    .registerConverter()
+                    .withConverter()
                     .build();
     /**
      * The fahrenheit unit.
@@ -50,7 +50,7 @@ public class Temperature extends Quantity<Temperature> {
                     .name("Fahrenheit")
                     .times(5d / 9d)
                     .add(+459.67)
-                    .registerConverter()
+                    .withConverter()
                     .build();
 
     /**

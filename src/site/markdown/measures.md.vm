@@ -1,0 +1,61 @@
+# Measures
+
+A measure is a structure composed by:
+
+* An identifier
+* A quantity (i.e. a value and an unit)
+* Min an max deviation
+* A timestamp
+
+Measure object
+--------------
+
+A <a href="apidocs/org/ow2/chameleon/metric/measure/Measure.html">measure</a> can be represented as:
+
+
+    |----------------------------------------------------------------------|
+    |  ID  |  QUANTITY   |   minDeviation  |   maxDeviation  |  TIMESTAMP  |
+    |----------------------------------------------------------------------|
+
+The measure structure is made to enforce traceability. The `id` field specifies from where the measure is taken and
+an unique id. The measured value is contained in the `quantity` field. A quantity is a couple &lt;value-unit&gt;.
+
+As most of the measured values are not really exact, the error is represented with a min and max deviation. For
+instance, a measure of 500 Lux +/- 10 Lux has a min and max deviation set to 10. Basically,
+the value is in the range [measure - minDeviation, measure + maxDeviation].
+
+Finally the timestamp determines when the measure was taken.
+
+Notcie that measure objects are immutable.
+
+Creating measures
+-----------------
+
+A <a href="apidocs/org/ow2/chameleon/metric/measure/Measure.Builder.html">builder</a> is provided to create a measure.
+This made the creation of new measure particularly easy. Don't forget that measure are immutable.
+
+Using the builder is straightforward:
+
+    Measure m = new Measure.Builder("light-sensor-1234-567-89")
+        .quantity(Quantity.valueOf(10, Illuminance.LUX))
+        .minDeviation(0.5)
+        .maxDeviation(0.5)
+        .timeStamp(System.currentTimeMillis())
+        .build();
+
+The builder object receive the measure's id in parameter. The `quantity` method sets the measured quantity. The `min`
+and `max` deviation methods set the measure error. The timeStamp sets the capture time. Finally the `build`
+method creates the measure.
+
+Not Captured measure
+--------------------
+
+Sometimes the measure cannot be read correctly, but for traceability purpose you still want to emit a measure. To
+generate such measure use:
+
+    Measure notCapture = new Measure.Builder("0000").notCaptured().timeStamp(System.currentTimeMillis()).build();
+
+
+
+
+

@@ -16,8 +16,7 @@ package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the pressure quantity. It defines its Unit, symbol name
@@ -27,11 +26,7 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Pressure extends Quantity<Pressure> {
 
-    public static final Unit<Pressure> PASCAL = new UnitBuilder<Pressure>()
-            .from(Force.NEWTON).pow(SI.METER, -2)
-            .name("Pascal")
-            .symbol("Pa")
-            .build();
+    public static final Unit<Pressure> PASCAL = SI.getSI().getUnitByName("pascal");
 
     /**
      * @param number

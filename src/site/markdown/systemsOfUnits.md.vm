@@ -1,0 +1,127 @@
+System of units and retrieving units
+=====================================
+
+The `org.ow2.chameleon.metric.MetricService` is the entry point of the API. From this object,
+you can retrieve the units and systems of units and convert quantities.
+
+Accessing the metric-service instance
+-------------------------------------
+
+The metric-service instance is a singleton. To access it, use:
+
+    MetricService service = MetricService.getInstance();
+
+On OSGi, avoid using `MetricService.getInstance()` in favor to the `org.ow2.chameleon.metric.MetricService` OSGi
+service.
+
+    ServiceReference ref = bundleContext
+        .getServiceReference("org.ow2.chameleon.metric.MetricService");
+    if (ref != null) {
+        MetricService service = bundleContext.getService(ref);
+    }
+
+Or with iPOJO:
+
+    @Requires
+    private MetricService service;
+
+Accessing systems of units
+--------------------------
+
+A system of units is a set of units which are chosen as the reference scales for some set of quantity kinds together
+with the definitions of each unit. Units may be defined by experimental observation or by proportion to another unit
+not included in the system. Not all units are included in systems, but most of them are.
+
+Including units in a system have several advantages. It let you retrieve a units from its name or symbol,
+and create a set of consistent units handling a set of quantity kinds.
+
+System have a unique name to identify them. For instance the international system can be retrieved using the `SI` name:
+
+    MetricService.getInstance().getSystemOfUnits("SI");
+    // or
+    MetricService.getInstance().getSystemOfUnits(SI.getName()));
+
+Provided systems of units
+-------------------------
+
+The library includes a set of systems:
+
+* the SI system including most of the regular physical units (name: `SI`)
+* the IT system contains units used for data and information technology (the bytes, bytes/second...) (name: `Data`)
+
+Retrieving units
+----------------
+
+You can retrieve a unit either by its name or symbol. Be aware that when possible, we use UTF-8 character as symbol.
+
+    Unit<Illuminance> lux = MetricService.getInstance().getSystemOfUnits("SI").getUnitBySymbol("lx");
+    Unit<Force> newton = MetricService.getInstance().getSystemOfUnits("SI").getUnitByName("newton");
+
+However, this approach is quite cumbersome, so most of the units are also defined in the _quantity kind_ classes. For
+instance the classes from the previous snippet are `Illuminance` and `Force`.
+
+    Unit<Illuminance> lux = Illuminance.LUX;
+    Unit<Force> newton = Force.NEWTON;
+
+When creating quantities, we generally use this second approach.
+
+Creating a system of units
+--------------------------
+
+You can create your own system of units. It will be registered in the metric-service and retrieved as the default
+ones. To implement a system of units, extend the `org.ow2.chameleon.metric.DefaultSystemOfUnits` class.
+
+                public class MySystem extends DefaultSystemOfUnits {
+
+                public MySystem() {
+                    super("MySystem", getDimensions()), getPrefixMapping());
+
+                    // Add the units
+                    this.addUnitToSystem(
+                        new Unit<Angle>("grad", "grad", Dimension.NONE));
+                }
+
+
+The constructor must call the super constructor with three parameters:
+
+* the name of the system (`MySystem`)
+* the dimensions used by the system (can be `null`)
+* the list of prefix handled by the system
+
+Dimensions are used to determine if two units are compatible (two units are compatible is they have the very same
+dimensions). If you don't provide dimensions, all your units will be considered dimension-less.
+
+Prefixes allows configuring _prefixed_ unit.  For example kilometer (_km_) is a prefixed unit with _k_ as prefix and
+_m_ as unit. When configured, all units added to the system are extended with the prefixed units. In the SI system,
+adding metre automatically generates km, hm, dm, cm, mm.... Each prefix specifies its name,
+prefix symbol and factor. For example the SI prefixes are:
+
+    public static List<Prefix> getSIPrefixMapping() {
+        List<Prefix> prefixes = new ArrayList<Prefix>();
+        prefixes.add(new Prefix("tera", "T", 1000000000000l));
+        prefixes.add(new Prefix("giga", "G", 1000000000l));
+        prefixes.add(new Prefix("mega", "M", 1000000));
+        prefixes.add(new Prefix("giga", "k", 1000));
+        prefixes.add(new Prefix("hecto", "h", 100));
+        prefixes.add(new Prefix("deci", "d", 0.1));
+        prefixes.add(new Prefix("centi", "c", 0.01));
+        prefixes.add(new Prefix("milli", "m", 0.001));
+        prefixes.add(new Prefix("micro", "\u00B5", 0.000001));
+        prefixes.add(new Prefix("nano", "n", 0.000000001));
+        prefixes.add(new Prefix("pico", "p", 0.000000000001));
+        return prefixes;
+    }
+
+Once the super constructor is called, you can add the units to your system. To know more on how to create units,
+read the <a href="units.html">units</a> page.
+
+The created system must be registered to the metric service singleton to be retrieved by tiers:
+
+    MetricService.getInstance().addSystemOfUnits(mySystem);
+
+On OSGi, don't forget to remove it when the bundle declaring the system is uninstalled.
+
+
+
+
+

@@ -31,13 +31,13 @@ public class DataRate extends Quantity<DataRate> {
     public static final Unit<DataRate> KILOBIT_PER_SECOND = new TransformedUnitBuilder<DataRate>(BIT_PER_SECOND)
             .times(1024)
             .symbol("Kb/s")
-            .registerConverter()
+            .withConverter()
             .build();
 
     public static final Unit<DataRate> MEGABIT_PER_SECOND = new TransformedUnitBuilder<DataRate>(KILOBIT_PER_SECOND)
             .times(1024)
             .symbol("Mb/s")
-            .registerConverter()
+            .withConverter()
             .build();
 
     /**

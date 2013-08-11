@@ -16,8 +16,7 @@ package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the Area quantity. It defines its Unit, symbol name
@@ -27,11 +26,9 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Area extends Quantity<Area> {
 
-    public static final Unit<Area> CUBIC_METER = new UnitBuilder<Area>()
-            .from(SI.METER).times(SI.METER).times(SI.METER)
-            .name("volume")
-            .symbol("m3")
-            .build();
+    public static final Unit<Area> CUBIC_METER = SI.getSI().getUnitBySymbol("\u33A1");
+
+    public static final Unit<Area> CUBIC_METRE = CUBIC_METER;
 
     /**
      * @param number

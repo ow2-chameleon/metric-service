@@ -15,20 +15,21 @@
 package org.ow2.chameleon.metric.converters;
 
 import org.junit.Test;
+import org.ow2.chameleon.metric.MetricService;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.quantities.Length;
 
 import static org.fest.assertions.Assertions.assertThat;
 
 /**
- * Checks the behavior of the converter registry and conversion chanin buidling.
+ * Checks the behavior of the converter registry and conversion chain building.
  */
 public class ConverterRegistryTest {
 
 
     @Test
     public void testConversionFromInchToMeter() {
-        QuantityConverter<Length> converter = ConverterRegistry.findConverter(Length.INCH, Length.METER);
+        QuantityConverter<Length> converter = MetricService.getInstance().getConverterRegistry().findConverter(Length.INCH, Length.METER);
         assertThat(converter).isNotNull();
         Quantity<Length> converted = converter.convert(Quantity.valueOf(10, Length.INCH));
         assertThat(converted.unit()).isEqualTo(Length.METER);
@@ -37,7 +38,7 @@ public class ConverterRegistryTest {
 
     @Test
     public void testConversionFromFootToCentimeter() {
-        QuantityConverter<Length> converter = ConverterRegistry.findConverter(Length.FOOT, Length.CENTIMETER);
+        QuantityConverter<Length> converter = MetricService.getInstance().getConverterRegistry().findConverter(Length.FOOT, Length.CENTIMETER);
         assertThat(converter).isNotNull();
         Quantity<Length> converted = converter.convert(Quantity.valueOf(10, Length.FOOT));
         assertThat(converted.unit()).isEqualTo(Length.CENTIMETER);
@@ -46,7 +47,7 @@ public class ConverterRegistryTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void rejectIncorrectInput() {
-        QuantityConverter<Length> converter = ConverterRegistry.findConverter(Length.FOOT, Length.CENTIMETER);
+        QuantityConverter<Length> converter = MetricService.getInstance().getConverterRegistry().findConverter(Length.FOOT, Length.CENTIMETER);
         assertThat(converter).isNotNull();
         // Illegal input
         converter.convert(Quantity.valueOf(10, Length.CENTIMETER));

@@ -18,9 +18,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *  This class offers methods to build derived units from SI units
- *
- *  @author clement
+ *  Derived units are units expressed as product of base units.
  */
 public class DerivedUnit<Q extends Quantity<Q>> extends Unit<Q> {
 

@@ -12,19 +12,21 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package org.ow2.chameleon.metric.units;
 
-import org.ow2.chameleon.metric.Dimension;
+package org.ow2.chameleon.metric.quantities;
+
+import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
- * This class represents Units of angles.
- *
- * In deed, even if angles have no dimensions. We define units to build more easily derived units.
- *
- * @author clement
+ * Represents a luminous flux.
  */
-public class Angle {
+public class LuminousFlux extends Quantity<LuminousFlux> {
 
-    public static Unit STERADIAN = new Unit("sr", "steradian", Dimension.NONE);
+    public static final Unit<LuminousFlux> LUMEN = SI.getSI().getUnitByName("lumen");
+
+    public LuminousFlux(Number number, Unit<LuminousFlux> unit) {
+        super(number, unit);
+    }
 }

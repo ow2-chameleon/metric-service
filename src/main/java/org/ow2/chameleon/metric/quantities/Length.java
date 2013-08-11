@@ -17,7 +17,7 @@ package org.ow2.chameleon.metric.quantities;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.TransformedUnitBuilder;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the length quantity. It defines its Unit, symbol name
@@ -27,49 +27,22 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Length extends Quantity<Length> {
 
-    public static final Unit<Length> METER = SI.METER;
-
-    public static final Unit<Length> KILOMETER = new TransformedUnitBuilder<Length>(METER)
-            .times(1000)
-            .symbol("km")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Length> HECTOMETER = new TransformedUnitBuilder<Length>(METER)
-            .times(100)
-            .symbol("hm")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Length> DECIMETER = new TransformedUnitBuilder<Length>(METER)
-            .times(0.1)
-            .symbol("dm")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Length> CENTIMETER = new TransformedUnitBuilder<Length>(METER)
-            .times(0.01)
-            .symbol("cm")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Length> MILLIMETER = new TransformedUnitBuilder<Length>(METER)
-            .times(0.001)
-            .symbol("mm")
-            .registerConverter()
-            .build();
-
-    public static final Unit<Length> INCH = new TransformedUnitBuilder<Length>(CENTIMETER)
+    public static final Unit<Length> METER = SI.METRE;
+    public static final Unit<Length> METRE = SI.METRE;
+    public static final Unit<Length> INCH = new TransformedUnitBuilder<Length>(SI.getSI().<Length>getUnitBySymbol("cm"))
             .times(2.54)
             .symbol("in")
-            .registerConverter()
+            .withConverter()
             .build();
 
     public static final Unit<Length> FOOT = new TransformedUnitBuilder<Length>(INCH)
             .times(12)
             .symbol("ft")
-            .registerConverter()
+            .withConverter()
             .build();
+    public static final Unit<Length> CENTIMETER = SI.getSI().getUnitBySymbol("cm");
+    public static final Unit<Length> MILLIMETER = SI.getSI().getUnitBySymbol("mm");
+    public static final Unit<Length> KILOMETER = SI.getSI().getUnitBySymbol("km");
 
     /**
      * @param number

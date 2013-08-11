@@ -20,10 +20,8 @@ import org.ow2.chameleon.metric.converters.QuantityConverter;
 
 /**
  * This class allows to build transform units.
- *
- * @author clement
  */
-public class TransformedUnit<Q extends Quantity<Q>> extends Unit<Q> {
+public class  TransformedUnit<Q extends Quantity<Q>> extends Unit<Q> {
 
     private final QuantityConverter<Q> converter;
 
@@ -44,5 +42,9 @@ public class TransformedUnit<Q extends Quantity<Q>> extends Unit<Q> {
 
     public QuantityConverter<Q> getConverter() {
         return converter;
+    }
+
+    public Unit<Q> getParent() {
+        return converter.to();
     }
 }

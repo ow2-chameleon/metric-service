@@ -14,10 +14,10 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.ow2.chameleon.metric.MetricService;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.*;
+import org.ow2.chameleon.metric.systems.*;
 
 /**
  * This class represents the acceleration quantity. It defines its Unit, symbol name
@@ -27,11 +27,7 @@ import org.ow2.chameleon.metric.units.*;
  */
 public class Acceleration extends Quantity<Acceleration> {
 
-    public static final Unit<Acceleration> ACCELERATION = new UnitBuilder<Acceleration>()
-            .from(SI.METER).pow(SI.SECOND, -2)
-            .name("acceleration")
-            .symbol("m/s2")
-            .build();
+    public static final Unit<Acceleration> METRE_PER_SECOND_SQUARED = SI.getSI().getUnitBySymbol("m/s\u00B2");
 
     /**
      * @param number
@@ -42,6 +38,6 @@ public class Acceleration extends Quantity<Acceleration> {
     }
 
     public Acceleration(Number number) {
-        super(number, ACCELERATION);
+        super(number, METRE_PER_SECOND_SQUARED);
     }
 }

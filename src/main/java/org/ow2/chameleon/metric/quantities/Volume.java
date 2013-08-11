@@ -16,8 +16,7 @@ package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.units.SI;
+import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the volume quantity. It defines its Unit, symbol name
@@ -27,11 +26,8 @@ import org.ow2.chameleon.metric.units.SI;
  */
 public class Volume extends Quantity<Volume> {
 
-    public static final Unit<Volume> SQUARE_METER = new UnitBuilder<Volume>()
-            .from(SI.METER).times(SI.METER)
-            .name("volume")
-            .symbol("m3")
-            .build();
+    public static final Unit<Volume> CUBIC_METRE = SI.getSI().getUnitBySymbol("\u33A5");
+    public static final Unit<Volume> CUBIC_METER = CUBIC_METRE;
 
     /**
      * @param number
@@ -42,7 +38,7 @@ public class Volume extends Quantity<Volume> {
     }
 
     public Volume(Number number) {
-        super(Volume.class, number, SQUARE_METER);
+        super(Volume.class, number, CUBIC_METRE);
     }
 }
 

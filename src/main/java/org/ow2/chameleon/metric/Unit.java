@@ -15,9 +15,14 @@
 package org.ow2.chameleon.metric;
 
 /**
- * This class defines a unit. A unit is associate to a specific quantity.
+ * This class defines a unit. A unit is associate to a specific quantity's kind.
  *
- * @author clement
+ * This class is the parent of all type of units.
+ * Units are immutable.
+ *
+ * Two units are compatible is they have the same symbol or have the same dimension.
+ *
+ * @param <Q> the kind of quantity
  */
 public class Unit<Q extends Quantity<Q>> {
 

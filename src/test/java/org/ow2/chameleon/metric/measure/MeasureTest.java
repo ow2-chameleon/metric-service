@@ -14,12 +14,12 @@
  */
 package org.ow2.chameleon.metric.measure;
 
-import org.ow2.chameleon.metric.Quantity;
-import org.ow2.chameleon.metric.UnitBuilder;
-import org.ow2.chameleon.metric.quantities.Illuminance;
-import org.ow2.chameleon.metric.units.Angle;
-import org.ow2.chameleon.metric.units.SI;
 import org.junit.Test;
+import org.ow2.chameleon.metric.DerivedUnitBuilder;
+import org.ow2.chameleon.metric.Quantity;
+import org.ow2.chameleon.metric.quantities.Angle;
+import org.ow2.chameleon.metric.quantities.Illuminance;
+import org.ow2.chameleon.metric.systems.SI;
 
 import java.util.Date;
 
@@ -35,8 +35,8 @@ public class MeasureTest {
 
         //Create a new quantity
         Quantity<Illuminance> illuminance = new Quantity<Illuminance>(Illuminance.class,10,
-                new UnitBuilder<Illuminance>()
-                        .from(SI.CANDELA).times(Angle.STERADIAN).pow(SI.METER, -2)
+                new DerivedUnitBuilder<Illuminance>()
+                        .from(SI.CANDELA).times(Angle.STERADIAN).pow(SI.METRE, -2)
                         .name("lux")
                         .symbol("lx").build());
 
@@ -56,5 +56,15 @@ public class MeasureTest {
         assertThat(m.minDeviation()).isEqualTo(illuminance.getNumber());
         assertThat(m.maxDeviation()).isEqualTo(illuminance.getNumber());
         assertThat(m.timeStamp()).isEqualTo(time);
+    }
+
+    @Test
+    public void testNotCaptured() {
+
+        Measure notCapture = new Measure.Builder("0000").notCaptured().timeStamp(System.currentTimeMillis()).build();
+
+        assertThat(notCapture.quantity().value().doubleValue()).isEqualTo(0.0);
+        assertThat(notCapture.quantity().unit()).isEqualTo(Measure.NOT_CAPTURED_QUANTITY.getUnit());
+
     }
 }

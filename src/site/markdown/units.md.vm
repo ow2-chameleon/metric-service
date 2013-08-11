@@ -1,0 +1,126 @@
+Units
+#####
+
+Definitions
+-----------
+
+A *unit* is composed by:
+
+* a name
+* a symbol, using utf-8 characters when possible
+* dimensions
+
+Dimensions are used for <a href="http://en.wikipedia.org/wiki/Dimensional_analysis">dimensional analysis</a>.
+
+Units are attached to a quantity's kind such as velocity or length. Kinds are represented as class parameter making
+obvious non-sense convertion or comparison.
+
+    // Don't use:
+    Unit unit = ...;
+    // Use: Unit<Kind> unit = ...;
+    Unit<Length> unit = ...;
+
+The metric-service API defines three types of units:
+
+* base units
+* derived units expressed as products of base units
+* transformed units applying transformations to another unit
+
+Unit objects are immutable.
+
+Base units
+-----------
+
+Base units are _standalone_ units (not expressed from another unit). For instance, metre,
+seconds and gram are base units.
+
+The SI system is composed by 7 base units.
+
+To create a base unit, instantiate the `Unit` class:
+
+    public static Unit<Length> METRE = new Unit<Length>("m", "meter", Dimension.LENGTH);
+
+The three arguments are:
+
+* the symbol
+* the name
+* the dimension
+
+Derived units
+-------------
+
+A derived unit is express as a product of base or derived units. For example, the Newton are : `kg x metre/second^2`,
+Pascal is : `N / m^2`.
+
+Creating a derived unit is done using a `DerivedUnitBuilder`.
+
+    Unit<Force> newton = new DerivedUnitBuilder<Force>()
+        .from(SI.getSI().getUnitBySymbol("kg"))).times(SI.METRE).pow(SI.SECOND,-2)
+        .name("newton")
+        .symbol("N").build();
+
+    Unit<Pressure> pascal = new DerivedUnitBuilder<Pressure>()
+        .from(newton).pow(SI.METRE, -2)
+        .name("pascal")
+        .symbol("Pa")
+        .build();
+
+The builder works as follow:
+
+* the unit given to the `from` is the initial unit
+* the other methods (`pow, dividedBy, times`) are apply to initial unit
+* the builder computes the unit products
+
+If you don't set a symbol, the String form of the product is used.
+
+Transformed units
+-----------------
+
+A transformed unit is a unit defined by a transformation from an initial unit. For example,
+the Celsius degree is a transformed unit. It is defined as `Kelvin + 273.15`.
+
+Creating a transformed unit is done using the `TransformedUnitBuilder`:
+
+    public static Unit<Temperature> CELSIUS =
+        new TransformedUnitBuilder<Temperature>(KELVIN)
+            .add(273.15)
+            .symbol("\u2103") // UTF-8 character for celsius
+            .name("Celsius")
+            .withConverter()
+            .build();
+
+As for the derived unit builder, transformed unit builders take an initial unit on which the operation are made. The
+`withConverter` method instructs the builder to register the conversion between the original unit and the created
+unit in the conversion registry. This converter is used when converting quantities to/from the new unit.
+
+Never forget that conversions are applied on quantities. To hel you build transformed unit, imagine reading it like:
+
+    1 celsius = 1 kelvin + 273.15 (kelvin)
+    1 kg = 1g * 1000
+
+Prefixed units
+-------------
+
+Prefixed unit are a type of transformed unit created when adding an unit to a system of units. For example,
+kilometer is a prefixed unit. It will be created when adding meter to the system. More details on the <a
+href="systemsOfUnits.html"> systems of unit page</a>.
+
+
+Retrieving units from quantity kinds
+-----------------------------------
+
+Most of the units provided by the library are available from the quantity's kind classes. For example,
+the Newton unit is available in the Force class, the Celsius unit is available in the Temperature class...
+
+When adding a unit, it is **strongly** recommended to add an _alias_ to the quantity's kind class. Such alias should
+retrieve the unit from the system of unit is it is declared into a system.
+
+    Quantity<Illuminance> lum = Quantity.valueOf(10.2, Illuminance.LUX)
+
+Retrieving units from a system of units
+---------------------------------------
+
+If the unit is registered within a system of units, you can retrieve it directly from the system:
+
+    Unit<Illuminance> lux = MetricService.getInstance().getSystemOfUnits("SI").getUnitBySymbol("lx");
+    Unit<Force> newton = MetricService.getInstance().getSystemOfUnits("SI").getUnitByName("newton");
