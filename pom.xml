@@ -49,6 +49,7 @@
 
     <properties>
         <site.path>snapshot</site.path>
+        <lastReleasedVersion>N/A</lastReleasedVersion>
     </properties>
 
 
@@ -204,6 +205,7 @@
             <id>release</id>
             <properties>
                 <site.path>release</site.path>
+                <lastReleasedVersion>${project.version}</lastReleasedVersion>
             </properties>
             <build>
                 <plugins>
@@ -224,6 +226,5 @@
             </build>
         </profile>
     </profiles>
-
 
 </project>

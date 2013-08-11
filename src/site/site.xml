@@ -90,6 +90,9 @@
                 <dependencies>
                     <tocTopMax>4</tocTopMax>
                 </dependencies>
+                <downloads>
+                    <toc>false</toc>
+                </downloads>
 
 
             </pages>
@@ -101,13 +104,14 @@
 
     <body>
         <head>
+            <link rel="stylesheet" href="css/font-awesome.css"/>
             <link type="text/css" href="css/orange.css" rel="stylesheet" media="screen"/>
             <link type="text/css" href="css/style.css" rel="stylesheet" media="screen"/>
         </head>
 
 
         <links>
-            <item name="Download" href="download.html" />
+            <item name="Download" href="downloads.html" />
             <item name="GitHub project" href="http://github.com/ow2-chameleon/metric-service" />
         </links>
 
@@ -131,7 +135,7 @@
 
 
         <menu name="Download" inherit="top">
-            <item name="Download" href="download.html" />
+            <item name="Download" href="downloads.html" />
             <item name="License" href="license.html" />
         </menu>
 
