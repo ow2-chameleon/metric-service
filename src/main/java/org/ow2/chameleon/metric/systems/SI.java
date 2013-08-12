@@ -28,7 +28,7 @@ public class SI extends DefaultSystemOfUnits {
 
     public static Unit<Length> METRE = new Unit<Length>("m", "meter", Dimension.LENGTH);
     public static Unit<Mass> GRAM = new Unit<Mass>("g", "gram", Dimension.MASS);
-    public static Unit SECOND = new Unit("s", "second", Dimension.TIME);
+    public static Unit<Time> SECOND = new Unit<Time>("s", "second", Dimension.TIME);
     public static Unit AMPERE = new Unit("A", "ampere", Dimension.ELECTRIC_CURRENT);
     public static Unit<Temperature> KELVIN = new Unit<Temperature>("K", "kelvin", Dimension.TEMPERATURE);
     public static Unit MOL = new Unit("mol", "mol", Dimension.AMOUNT_OF_SUBSTANCE);
