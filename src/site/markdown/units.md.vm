@@ -115,7 +115,9 @@ the Newton unit is available in the Force class, the Celsius unit is available i
 When adding a unit, it is **strongly** recommended to add an _alias_ to the quantity's kind class. Such alias should
 retrieve the unit from the system of unit is it is declared into a system.
 
-    Quantity<Illuminance> lum = Quantity.valueOf(10.2, Illuminance.LUX)
+    Quantity<Illuminance> lum = Quantity.valueOf(Illuminance.class, 10.2, Illuminance.LUX);
+    // or
+    Quantity<Illuminance> lum = new Illuminance(10.2, Illuminance.LUX);
 
 Retrieving units from a system of units
 ---------------------------------------

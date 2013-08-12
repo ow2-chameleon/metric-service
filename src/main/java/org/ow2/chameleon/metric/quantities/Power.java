@@ -33,11 +33,11 @@ public class Power extends Quantity<Power> {
      * @param unit
      */
     public Power(Number number, Unit<Power> unit) {
-        super(number, unit);
+        super(Power.class,number, unit);
     }
 
     public Power(Number number) {
-        super(number, WATT);
+        this(number, WATT);
     }
 
 

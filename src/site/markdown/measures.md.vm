@@ -37,7 +37,7 @@ This made the creation of new measure particularly easy. Don't forget that measu
 Using the builder is straightforward:
 
     Measure m = new Measure.Builder("light-sensor-1234-567-89")
-        .quantity(Quantity.valueOf(10, Illuminance.LUX))
+        .quantity(Quantity.valueOf(Illuminance.class, 10, Illuminance.LUX))
         .minDeviation(0.5)
         .maxDeviation(0.5)
         .timeStamp(System.currentTimeMillis())

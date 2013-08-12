@@ -27,16 +27,12 @@ public class Force extends Quantity<Force> {
     public static final Unit<Force> NEWTON = MetricService.getInstance().getSystemOfUnits("SI").getUnitByName
             ("newton");
 
-    /**
-     * @param number
-     * @param unit
-     */
     public Force(Number number, Unit<Force> unit) {
         super(Force.class, number, unit);
     }
 
     public Force(Number number) {
-        super(Force.class, number, NEWTON);
+        this(number, NEWTON);
     }
 
 

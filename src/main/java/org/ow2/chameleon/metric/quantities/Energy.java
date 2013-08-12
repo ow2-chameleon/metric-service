@@ -33,11 +33,11 @@ public class Energy extends Quantity<Energy> {
      * @param unit
      */
     public Energy(Number number, Unit<Energy> unit) {
-        super(number, unit);
+        super(Energy.class, number, unit);
     }
 
     public Energy(Number number) {
-        super(number, JOULE);
+        this(number, JOULE);
     }
 
 

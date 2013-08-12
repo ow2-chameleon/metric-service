@@ -14,6 +14,7 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.systems.SI;
 import org.junit.Test;
 
@@ -53,8 +54,8 @@ public class LengthTest {
 
         // Additions
 
-        Length l12 = l1.add(l2);
-        Length l21 = l2.add(l1);
+        Quantity<Length> l12 = l1.add(l2);
+        Quantity<Length> l21 = l2.add(l1);
 
         assertThat(l12.getNumber()).isEqualTo(20.0);
         assertThat(l21.getNumber()).isEqualTo(20.0);
@@ -63,8 +64,8 @@ public class LengthTest {
 
         // Subtractions
 
-        Length l_12 = l1.sub(l2);
-        Length l_21 = l2.sub(l1);
+        Quantity<Length> l_12 = l1.sub(l2);
+        Quantity<Length> l_21 = l2.sub(l1);
 
         assertThat(l_12.getNumber()).isEqualTo(0.0);
         assertThat(l_21.getNumber()).isEqualTo(0.0);
@@ -80,7 +81,7 @@ public class LengthTest {
         assertThat(l2.getNumber()).isEqualTo(1);
         assertThat(l2.getNormalizedQuantity().getNumber()).isEqualTo(1000.0);
 
-        Length l3 = l1.add(l2);
+        Quantity<Length> l3 = l1.add(l2);
         assertThat(l3.getNumber()).isEqualTo(2000.0);
         assertThat(l3.getUnit()).isEqualTo(SI.METRE);
 

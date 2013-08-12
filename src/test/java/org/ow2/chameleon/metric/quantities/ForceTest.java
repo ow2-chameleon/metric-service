@@ -52,7 +52,7 @@ public class ForceTest {
         Unit<Force> composed = new DerivedUnitBuilder<Force>().from(SI.getSI().<Force>getUnitByName("kilogram")).times
                 (Length.METER).dividedBy(SI.SECOND, 2).build();
 
-        Quantity<Force> test = Quantity.valueOf(1, composed);
+        Quantity<Force> test = Quantity.valueOf(Force.class, 1, composed);
 
         assertThat(N.getUnit().isCompatible(test.getUnit()));
         assertThat(test.as(Force.NEWTON).value().doubleValue()).isEqualTo(1.0);

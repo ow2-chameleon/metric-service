@@ -34,20 +34,15 @@ public class Temperature extends Quantity<Temperature> {
     /**
      * The celsius unit.
      */
-    public static Unit<Temperature> CELSIUS =
-            new TransformedUnitBuilder<Temperature>(KELVIN)
-                    .symbol("\u2103")
-                    .name("Celsius")
-                    .add(273.15)
-                    .withConverter()
-                    .build();
+    public static Unit<Temperature> CELSIUS = SI.getSI().getUnitByName("celsius");
+
     /**
      * The fahrenheit unit.
      */
     public static Unit<Temperature> FAHRENHEIT =
             new TransformedUnitBuilder<Temperature>(KELVIN)
                     .symbol("\u2109")
-                    .name("Fahrenheit")
+                    .name("fahrenheit")
                     .times(5d / 9d)
                     .add(+459.67)
                     .withConverter()

@@ -27,6 +27,6 @@ public class ElectricResistance extends Quantity<ElectricResistance> {
     public static final Unit<ElectricResistance> OHM = SI.getSI().getUnitByName("ohm");
 
     public ElectricResistance(Number number, Unit<ElectricResistance> unit) {
-        super(number, unit);
+        super(ElectricResistance.class, number, unit);
     }
 }

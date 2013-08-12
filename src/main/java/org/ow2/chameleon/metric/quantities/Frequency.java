@@ -34,10 +34,10 @@ public class Frequency extends Quantity<Frequency> {
      * @param unit
      */
     public Frequency(Number number, Unit<Frequency> unit) {
-        super(number, unit);
+        super(Frequency.class, number, unit);
     }
 
     public Frequency(Number number) {
-        super(number, HERTZ);
+        this(number, HERTZ);
     }
 }

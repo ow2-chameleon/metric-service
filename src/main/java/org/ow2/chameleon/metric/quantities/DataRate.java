@@ -45,10 +45,10 @@ public class DataRate extends Quantity<DataRate> {
      * @param unit
      */
     public DataRate(Number number, Unit<DataRate> unit) {
-        super(number, unit);
+        super(DataRate.class, number, unit);
     }
 
     public DataRate(Number number) {
-        super(number, BIT_PER_SECOND);
+        this(number, BIT_PER_SECOND);
     }
 }

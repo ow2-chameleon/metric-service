@@ -1,7 +1,7 @@
 # Quantities
 
 A <a href="apidocs/org/ow2/chameleon/Quantity.html">quantity</a> represents an amount of a certain type of data
-(kind). A quantity is represented by value (Number) and an Unit. As measures, quantities are immutable.
+(kind). A quantity is represented by value (Number), an Unit and a kind. As measures, quantities are immutable.
 
 Quantity's kinds
 ----------------
@@ -19,7 +19,7 @@ provided by the library. The following class gives an example of kind of quantit
         public static Unit<Angle> STERADIAN = MetricService.getInstance().getSystemOfUnits("SI").getUnitByName("steradian");
 
         public Angle(Number number, Unit<Angle> unit) {
-           super(number, unit);
+           super(Angle.class, number, unit);
         }
     }
 
@@ -27,7 +27,6 @@ It is recommended to declare the units associated to the kind in the class. In t
 the radian and steradian units are declared and so are easily accessible.
 
 Obviously you can implement your own kind.
-
 
 Creating quantities
 -------------------
@@ -38,9 +37,9 @@ Using the quantity's kind is the easiest way to create a quantity.
 
     Quantity<Force> force = new Force(10.0, Force.NEWTON);
 
-Alternatively, you can create a quantity directly from the Quantity class.
+Alternatively, you can create a quantity directly from the Quantity class. The first argument sets the quantity's kind.
 
-    Quantity<Force> force = Quantity.valueOf(10.0, Force.NEWTON);
+    Quantity<Force> force = Quantity.valueOf(Force.class, 10.0, Force.NEWTON);
 
 Manipulating quantities
 -----------------------

@@ -59,14 +59,4 @@ public class Length extends Quantity<Length> {
     public Length(Number number) {
         super(Length.class, number, METER);
     }
-
-    public Length add(Length that) {
-        Quantity<Length> l = this.add((Quantity<Length>) that);
-        return new Length(l);
-    }
-
-    public Length sub(Length that) {
-        Length s = new Length(-1 * that.value().doubleValue(), that.unit());
-        return this.add(s);
-    }
 }

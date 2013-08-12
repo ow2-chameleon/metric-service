@@ -17,6 +17,7 @@ package org.ow2.chameleon.metric;
 import org.ow2.chameleon.metric.converters.QuantityConverter;
 
 import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * This class defines what is a quantity. It offers methods to construct a quantity and
@@ -28,23 +29,34 @@ import java.lang.reflect.ParameterizedType;
 public class Quantity<Q extends Quantity<Q>> {
 
     /**
-     * The Unknown quantity name.
+     * The UNKNOWN quantity kind.
      */
     public static final String UNKNOWN_NAME = "unknown";
 
     private final Number number;
     private final Unit<Q> unit;
-    private final Class kind;
+    private final String kind;
 
     /**
-     * @param number
-     * @param unit
+     * Creates a quantity.
+     * @param kind the quantity's kind
+     * @param number amount
+     * @param unit unit
      */
-    public Quantity(Number number, Unit<Q> unit) {
-        this(null, number, unit);
+    public Quantity(Class<Q> kind, Number number, Unit<Q> unit) {
+        this.number = number;
+        this.unit = unit;
+        this.kind = kind.getName();
     }
 
-    public Quantity(Class<Q> kind, Number number, Unit<Q> unit) {
+    /**
+     * Creates a quantity.
+     * The kind is given as String. This constructor is only used internally.
+     * @param kind the quantity's kind
+     * @param number amount
+     * @param unit unit
+     */
+    public Quantity(String kind, Number number, Unit<Q> unit) {
         this.number = number;
         this.unit = unit;
         this.kind = kind;
@@ -52,14 +64,15 @@ public class Quantity<Q extends Quantity<Q>> {
 
     /**
      * Returns the amount corresponding to the specified value and unit.
+     * The quantity's kind is inferred from the unit class.
      *
      * @param value the value stated in the specified unit.
      * @param unit  the unit in which the value is stated.
      * @return the corresponding amount.
      */
-    public static <Q extends Quantity<Q>> Quantity<Q> valueOf(Number value,
+    public static <Q extends Quantity<Q>> Quantity<Q> valueOf(Class<Q> kind, Number value,
                                                        Unit<Q> unit) {
-        return new Quantity<Q>(value, unit);
+        return new Quantity<Q>(kind, value, unit);
     }
 
     public Number value() {
@@ -92,16 +105,7 @@ public class Quantity<Q extends Quantity<Q>> {
      * @return the quantity name, "unknown" if it can't be inferred.
      */
     public String getKind() {
-        if (this.kind == null) {
-            ParameterizedType sup = (ParameterizedType) this.getClass().getGenericSuperclass();
-            if (sup.getActualTypeArguments().length == 0  || ! (sup.getActualTypeArguments()[0] instanceof Class)) {
-                return UNKNOWN_NAME;
-            }
-            Class q = (Class) sup.getActualTypeArguments()[0];
-            return q.getName();
-        } else {
-            return this.kind.getName();
-        }
+        return kind;
     }
 
     /**
@@ -112,7 +116,7 @@ public class Quantity<Q extends Quantity<Q>> {
      */
     public Quantity<Q> add(Quantity<Q> that) {
         Quantity<Q> that2 = that.as(unit);
-        return valueOf(that2.getNumber().doubleValue() + this.getNumber().doubleValue(), unit);
+        return new Quantity<Q>(kind, that2.getNumber().doubleValue() + this.getNumber().doubleValue(), unit);
     }
 
     public Quantity<Q> sub(Quantity<Q> that) {
@@ -120,7 +124,7 @@ public class Quantity<Q extends Quantity<Q>> {
     }
 
     public Quantity<Q> times(Number number) {
-        return valueOf(getNumber().doubleValue() * number.doubleValue(), getUnit());
+        return new Quantity<Q>(kind, getNumber().doubleValue() * number.doubleValue(), getUnit());
     }
 
     public Quantity<Q> getNormalizedQuantity() {
@@ -149,7 +153,7 @@ public class Quantity<Q extends Quantity<Q>> {
             if (! dimension1.equals(Dimension.NONE)  && ! dimension2.equals(Dimension.NONE)  && dimension1.equals
                     (dimension2)) {
                 // this.unit and unit are actually the same.
-                return new Quantity<Q>(value(), unit);
+                return new Quantity<Q>(kind, value(), unit);
             }
         }
 

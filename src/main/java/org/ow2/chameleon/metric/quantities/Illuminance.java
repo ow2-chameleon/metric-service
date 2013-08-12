@@ -33,11 +33,11 @@ public class Illuminance extends Quantity<Illuminance> {
      * @param unit
      */
     public Illuminance(Number number, Unit<Illuminance> unit) {
-        super(number, unit);
+        super(Illuminance.class, number, unit);
     }
 
     public Illuminance(Number number) {
-        super(number, LUX);
+        this(number, LUX);
     }
 
 

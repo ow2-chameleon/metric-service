@@ -65,6 +65,14 @@ public class SI extends DefaultSystemOfUnits {
         this.addUnitToSystem(steradian);
         this.addUnitToSystem(new Unit<Angle>("rad", "radian", Dimension.NONE));
 
+        // Celsius
+        this.addUnitToSystem(new TransformedUnitBuilder<Temperature>(KELVIN)
+                .symbol("\u2103")
+                .name("celsius")
+                .add(273.15)
+                .withConverter()
+                .build());
+
         // Frequency
         this.addUnitToSystem(new DerivedUnitBuilder<Frequency>().pow(SI.SECOND, -1).name("hertz").symbol("Hz").build());
 

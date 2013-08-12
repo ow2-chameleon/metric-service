@@ -35,6 +35,6 @@ public class Angle extends Quantity<Angle> {
      * @param unit
      */
     public Angle(Number number, Unit<Angle> unit) {
-        super(number, unit);
+        super(Angle.class, number, unit);
     }
 }

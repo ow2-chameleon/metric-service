@@ -14,9 +14,9 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.junit.Test;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.systems.SI;
-import org.junit.Test;
 
 import static org.fest.assertions.Assertions.assertThat;
 
@@ -74,8 +74,8 @@ public class MassTest {
 
     @Test
     public void testConversion() {
-        Quantity<Mass> mass1 = new Quantity<Mass>(1000, Mass.GRAM);
-        Quantity<Mass> mass2 = new Quantity<Mass>(1, Mass.KILOGRAM);
+        Quantity<Mass> mass1 = new Quantity<Mass>(Mass.class, 1000, Mass.GRAM);
+        Quantity<Mass> mass2 = new Quantity<Mass>(Mass.class, 1, Mass.KILOGRAM);
 
         assertThat(mass1.as(Mass.KILOGRAM).value().doubleValue()).isEqualTo(1.0);
         assertThat(mass2.as(Mass.GRAM).value().doubleValue()).isEqualTo(1000.0);
@@ -85,8 +85,8 @@ public class MassTest {
 
     @Test
     public void testMassUsingDifferentUnit() {
-        Quantity<Mass> mass1 = new Quantity<Mass>(1000, Mass.GRAM);
-        Quantity<Mass> mass2 = new Quantity<Mass>(1, Mass.KILOGRAM);
+        Quantity<Mass> mass1 = new Quantity<Mass>(Mass.class, 1000, Mass.GRAM);
+        Quantity<Mass> mass2 = new Quantity<Mass>(Mass.class, 1, Mass.KILOGRAM);
 
         Quantity<Mass> added = mass1.add(mass2);
         assertThat(added.value().doubleValue()).isEqualTo(2000.0);

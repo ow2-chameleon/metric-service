@@ -34,10 +34,10 @@ public class Acceleration extends Quantity<Acceleration> {
      * @param unit
      */
     public Acceleration(Number number, Unit<Acceleration> unit) {
-        super(number, unit);
+        super(Acceleration.class, number, unit);
     }
 
     public Acceleration(Number number) {
-        super(number, METRE_PER_SECOND_SQUARED);
+        this(number, METRE_PER_SECOND_SQUARED);
     }
 }

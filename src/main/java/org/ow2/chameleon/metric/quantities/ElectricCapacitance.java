@@ -27,6 +27,6 @@ public class ElectricCapacitance extends Quantity<ElectricCapacitance> {
     public static final Unit<ElectricCapacitance> FARAD = SI.getSI().getUnitByName("farad");
 
     public ElectricCapacitance(Number number, Unit<ElectricCapacitance> unit) {
-        super(number, unit);
+        super(ElectricCapacitance.class, number, unit);
     }
 }

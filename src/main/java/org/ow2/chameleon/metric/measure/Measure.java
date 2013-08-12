@@ -40,7 +40,7 @@ public class Measure {
      * A specific quantity used for measure that are invalid (because of a device failure, or issue in the response).
      * This quantify uses a specific unit 'NaM' (not a measure) and has a zero-value.
      */
-    public static Quantity NOT_CAPTURED_QUANTITY = Quantity.valueOf(0.0, new Unit("\u2205", "NaM"));
+    public static Quantity NOT_CAPTURED_QUANTITY = new Quantity("", 0.0, new Unit("\u2205", "NaM"));
 
     /**
      * |----------------------------------------------------------------------|

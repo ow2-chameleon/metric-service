@@ -27,6 +27,6 @@ public class LuminousFlux extends Quantity<LuminousFlux> {
     public static final Unit<LuminousFlux> LUMEN = SI.getSI().getUnitByName("lumen");
 
     public LuminousFlux(Number number, Unit<LuminousFlux> unit) {
-        super(number, unit);
+        super(LuminousFlux.class, number, unit);
     }
 }

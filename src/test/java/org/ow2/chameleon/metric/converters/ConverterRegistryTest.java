@@ -31,7 +31,7 @@ public class ConverterRegistryTest {
     public void testConversionFromInchToMeter() {
         QuantityConverter<Length> converter = MetricService.getInstance().getConverterRegistry().findConverter(Length.INCH, Length.METER);
         assertThat(converter).isNotNull();
-        Quantity<Length> converted = converter.convert(Quantity.valueOf(10, Length.INCH));
+        Quantity<Length> converted = converter.convert(Quantity.valueOf(Length.class, 10, Length.INCH));
         assertThat(converted.unit()).isEqualTo(Length.METER);
         assertThat(converted.value()).isEqualTo(0.254);
     }
@@ -40,7 +40,7 @@ public class ConverterRegistryTest {
     public void testConversionFromFootToCentimeter() {
         QuantityConverter<Length> converter = MetricService.getInstance().getConverterRegistry().findConverter(Length.FOOT, Length.CENTIMETER);
         assertThat(converter).isNotNull();
-        Quantity<Length> converted = converter.convert(Quantity.valueOf(10, Length.FOOT));
+        Quantity<Length> converted = converter.convert(Quantity.valueOf(Length.class, 10, Length.FOOT));
         assertThat(converted.unit()).isEqualTo(Length.CENTIMETER);
         assertThat(converted.value()).isEqualTo(304.8);
     }
@@ -50,6 +50,6 @@ public class ConverterRegistryTest {
         QuantityConverter<Length> converter = MetricService.getInstance().getConverterRegistry().findConverter(Length.FOOT, Length.CENTIMETER);
         assertThat(converter).isNotNull();
         // Illegal input
-        converter.convert(Quantity.valueOf(10, Length.CENTIMETER));
+        converter.convert(Quantity.valueOf(Length.class, 10, Length.CENTIMETER));
     }
 }

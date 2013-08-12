@@ -57,10 +57,10 @@ public class Data extends Quantity<Data> {
      * @param unit
      */
     public Data(Number number, Unit<Data> unit) {
-        super(number, unit);
+        super(Data.class, number, unit);
     }
 
     public Data(Number number) {
-        super(number, BIT);
+        this(number, BIT);
     }
 }

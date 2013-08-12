@@ -35,11 +35,11 @@ public class Area extends Quantity<Area> {
      * @param unit
      */
     public Area(Number number, Unit<Area> unit) {
-        super(number, unit);
+        super(Area.class, number, unit);
     }
 
     public Area(Number number) {
-        super(number, CUBIC_METER);
+        this(number, CUBIC_METER);
     }
 }
 

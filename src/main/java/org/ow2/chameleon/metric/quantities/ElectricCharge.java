@@ -27,10 +27,10 @@ public class ElectricCharge extends Quantity<ElectricCharge> {
     public static final Unit<ElectricCharge> COULOMB = SI.getSI().getUnitByName("coulomb");
 
     public ElectricCharge(Number number, Unit<ElectricCharge> unit) {
-        super(number, unit);
+        super(ElectricCharge.class, number, unit);
     }
 
     public ElectricCharge(Number number) {
-        super(number, COULOMB);
+        this(number, COULOMB);
     }
 }

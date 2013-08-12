@@ -41,7 +41,7 @@ public class FunctionBasedConverter<Q extends Quantity<Q>> implements QuantityCo
             throw new IllegalArgumentException("The quantity " + quantity.toString() + " cannot be converter to " +
                     to.toString() + " - incompatible units (expected " + from.toString() + ")");
         } else {
-            return Quantity.valueOf(conversion.apply(quantity.getNumber()), to);
+            return new Quantity<Q>(quantity.getKind(), conversion.apply(quantity.getNumber()), to);
         }
     }
 

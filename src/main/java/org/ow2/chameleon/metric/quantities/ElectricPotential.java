@@ -12,6 +12,6 @@ public class ElectricPotential extends Quantity<ElectricPotential> {
     public static final Unit<ElectricPotential> VOLT = SI.getSI().getUnitByName("volt");
 
     public ElectricPotential(Number number, Unit<ElectricPotential> unit) {
-        super(number, unit);
+        super(ElectricPotential.class, number, unit);
     }
 }
