@@ -29,10 +29,10 @@ public class SI extends DefaultSystemOfUnits {
     public static Unit<Length> METRE = new Unit<Length>("m", "meter", Dimension.LENGTH);
     public static Unit<Mass> GRAM = new Unit<Mass>("g", "gram", Dimension.MASS);
     public static Unit<Time> SECOND = new Unit<Time>("s", "second", Dimension.TIME);
-    public static Unit AMPERE = new Unit("A", "ampere", Dimension.ELECTRIC_CURRENT);
+    public static Unit<ElectricCurrent> AMPERE = new Unit<ElectricCurrent>("A", "ampere", Dimension.ELECTRIC_CURRENT);
     public static Unit<Temperature> KELVIN = new Unit<Temperature>("K", "kelvin", Dimension.TEMPERATURE);
-    public static Unit MOL = new Unit("mol", "mol", Dimension.AMOUNT_OF_SUBSTANCE);
-    public static Unit CANDELA = new Unit("cd", "candela", Dimension.LUMINOUS_INTENSITY);
+    public static Unit<AmountOfSubstance> MOL = new Unit<AmountOfSubstance>("mol", "mol", Dimension.AMOUNT_OF_SUBSTANCE);
+    public static Unit<LuminousIntensity> CANDELA = new Unit<LuminousIntensity>("cd", "candela", Dimension.LUMINOUS_INTENSITY);
 
     public SI() {
         super("SI", Arrays.asList(
