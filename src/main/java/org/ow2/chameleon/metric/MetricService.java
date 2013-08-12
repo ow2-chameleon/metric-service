@@ -37,7 +37,7 @@ public class MetricService {
     private TreeMap<String, SystemOfUnits> systems;
     private ConverterRegistry registry;
 
-    private MetricService() {
+    protected MetricService() {
         systems = new TreeMap<String, SystemOfUnits>();
         registry = new ConverterRegistry();
     }
