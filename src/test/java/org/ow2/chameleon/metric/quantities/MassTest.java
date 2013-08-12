@@ -81,8 +81,21 @@ public class MassTest {
         assertThat(mass2.as(Mass.GRAM).value().doubleValue()).isEqualTo(1000.0);
 
         assertThat(mass1.as(Mass.GRAM).value().doubleValue()).isEqualTo(1000.0);
+    }
 
+    @Test
+    public void testMassUsingDifferentUnit() {
+        Quantity<Mass> mass1 = new Quantity<Mass>(1000, Mass.GRAM);
+        Quantity<Mass> mass2 = new Quantity<Mass>(1, Mass.KILOGRAM);
 
+        Quantity<Mass> added = mass1.add(mass2);
+        assertThat(added.value().doubleValue()).isEqualTo(2000.0);
+        assertThat(added.as(Mass.KILOGRAM).value().doubleValue()).isEqualTo(2.0);
 
+        // Revert the quantities.
+        added = mass2.add(mass1);
+        assertThat(added.value().doubleValue()).isEqualTo(2.0);
+        assertThat(added.as(Mass.KILOGRAM).value().doubleValue()).isEqualTo(2.0);
+        assertThat(added.as(Mass.GRAM).value().doubleValue()).isEqualTo(2000.0);
     }
 }

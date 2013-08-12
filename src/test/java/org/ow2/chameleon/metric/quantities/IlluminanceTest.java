@@ -62,6 +62,6 @@ public class IlluminanceTest {
     @Test
     public void testName() {
         Illuminance illuminance = new Illuminance(10);
-        assertThat(illuminance.getQuantityName()).isEqualTo("Illuminance");
+        assertThat(illuminance.getKind()).isEqualTo(Illuminance.class.getName());
     }
 }
