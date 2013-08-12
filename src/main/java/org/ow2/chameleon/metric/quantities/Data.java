@@ -15,42 +15,189 @@
 package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
+import org.ow2.chameleon.metric.TransformedUnit;
 import org.ow2.chameleon.metric.TransformedUnitBuilder;
 import org.ow2.chameleon.metric.Unit;
 
 /**
  * This class represents an amount of data quantity in bit.
- * This class use the JEDEC memory standard (http://en.wikipedia.org/wiki/JEDEC_memory_standards).
+ * This class use the IEC and decimal prefixes.
  *
  * @author clement.escoffier@gmail.com
  */
 public class Data extends Quantity<Data> {
 
-    public static final Unit<Data> BIT = new Unit<Data>("b", "bit");
+    public static final Unit<Data> BIT = new Unit<Data>("bit", "bit");
 
+    public static final Unit<Data> BYTE = new TransformedUnitBuilder<Data>(BIT).times(8).symbol("B").name("byte")
+            .withConverter().build();
+
+    public static final Unit<Data> OCTET = BYTE;
+
+    public static final Unit<Data> NIBBLE = new TransformedUnitBuilder<Data>(BIT).times(4).symbol("ni").name("nibble")
+            .withConverter().build();
+
+    public static final Unit<Data> RUNE = new TransformedUnitBuilder<Data>(BIT).times(16).symbol("ru").name("rune")
+            .withConverter().build();
+
+    public static final Unit<Data> QUAD = new TransformedUnitBuilder<Data>(BIT).times(32).symbol("q").name("quad")
+            .withConverter().build();
+
+    // Multiples using the decimal prefix (SI)
+
+    /**
+     * 1 Kilobit = 1000 bits
+     */
     public static final Unit<Data> KILOBIT = new TransformedUnitBuilder<Data>(BIT)
-            .times(1024)
-            .symbol("Kb")
+            .times(Math.pow(1000, 1))
+            .symbol("Kbit")
             .withConverter()
             .build();
 
-    public static final Unit<Data> MEGABIT = new TransformedUnitBuilder<Data>(KILOBIT)
-            .times(1024)
-            .symbol("Mb")
+    /**
+     * 1 KiloByte = 1000 Bytes
+     */
+    public static final Unit<Data> KILOBYTE = new TransformedUnitBuilder<Data>(BYTE)
+            .times(Math.pow(1000, 1))
+            .symbol("KB")
             .withConverter()
             .build();
 
-    public static final Unit<Data> GIGABIT = new TransformedUnitBuilder<Data>(MEGABIT)
+    /**
+     * 1 Kibibit = 1024 bits
+     */
+    public static final Unit<Data> KIBIBIT = new TransformedUnitBuilder<Data>(BIT)
             .times(1024)
-            .symbol("Gb")
+            .symbol("Kibit")
+            .name("kibibit")
             .withConverter()
             .build();
 
-    public static final Unit<Data> TERAGABIT = new TransformedUnitBuilder<Data>(GIGABIT)
+    /**
+     * 1 kibibyte = 1024 bytes
+     */
+    public static final Unit<Data> KIBIBYTE = new TransformedUnitBuilder<Data>(BYTE)
             .times(1024)
-            .symbol("Tb")
+            .symbol("KiB")
+            .name("kibibyte")
             .withConverter()
             .build();
+
+    /**
+     * 1 Megabit = 1 000 000 bits
+     */
+    public static final Unit<Data> MEGABIT = new TransformedUnitBuilder<Data>(BIT)
+            .times(Math.pow(1000, 2))
+            .symbol("Mbit")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 MegaByte = 1000^2 Bytes
+     */
+    public static final Unit<Data> MEGABYTE = new TransformedUnitBuilder<Data>(BYTE)
+            .times(Math.pow(1000, 2))
+            .symbol("MB")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 mebibit = 1024^2 bits
+     */
+    public static final Unit<Data> MEBIBIT = new TransformedUnitBuilder<Data>(BIT)
+            .times(Math.pow(1024,2))
+            .symbol("Mibit")
+            .name("mebibit")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 mebibyte = 1024^2 bytes
+     */
+    public static final Unit<Data> MEBIBYTE = new TransformedUnitBuilder<Data>(BYTE)
+            .times(Math.pow(1024,2))
+            .symbol("MiB")
+            .name("mebibyte")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 Gigabit = 1000^3 bits
+     */
+    public static final Unit<Data> GIGABIT = new TransformedUnitBuilder<Data>(BIT)
+            .times(Math.pow(1000, 3))
+            .symbol("Gbit")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 GigaByte = 1000^3 bytes
+     */
+    public static final Unit<Data> GIGABYTE = new TransformedUnitBuilder<Data>(BYTE)
+            .times(Math.pow(1000, 3))
+            .symbol("GB")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 gibibit = 1024^3 bits
+     */
+    public static final Unit<Data> GIBIBIT = new TransformedUnitBuilder<Data>(BIT)
+            .times(Math.pow(1024,3))
+            .symbol("Gibit")
+            .name("gibibit")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 gibibyte = 1024^3 bytes
+     */
+    public static final Unit<Data> GIBIBYTE = new TransformedUnitBuilder<Data>(BYTE)
+            .times(Math.pow(1024,3))
+            .symbol("GiB")
+            .name("gibibyte")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 terabit = 1000^4 bits
+     */
+    public static final Unit<Data> TERABIT = new TransformedUnitBuilder<Data>(BIT)
+            .times(Math.pow(1000, 4))
+            .symbol("Tbit")
+            .withConverter()
+            .build();
+
+
+    /**
+     * 1 TeraByte = 1000^4 bytes
+     */
+    public static final Unit<Data> TERABYTE = new TransformedUnitBuilder<Data>(BYTE)
+            .times(Math.pow(1000, 4))
+            .symbol("TB")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 tebibit = 1024^4 bits
+     */
+    public static final Unit<Data> TEBEBIT = new TransformedUnitBuilder<Data>(BIT)
+            .times(Math.pow(1024,4))
+            .symbol("Tibit")
+            .name("tebibit")
+            .withConverter()
+            .build();
+
+    /**
+     * 1 tebibyte = 1024^4 bytes
+     */
+    public static final Unit<Data> TEBIBYTE = new TransformedUnitBuilder<Data>(BYTE)
+            .times(Math.pow(1024,4))
+            .symbol("TiB")
+            .name("tibibyte")
+            .withConverter()
+            .build();
+
 
     /**
      * @param number

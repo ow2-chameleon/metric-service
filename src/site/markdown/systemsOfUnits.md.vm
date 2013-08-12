@@ -47,7 +47,6 @@ Provided systems of units
 The library includes a set of systems:
 
 * the SI system including most of the regular physical units (name: `SI`)
-* the IT system contains units used for data and information technology (the bytes, bytes/second...) (name: `Data`)
 
 Retrieving units
 ----------------
