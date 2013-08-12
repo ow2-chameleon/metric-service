@@ -34,7 +34,7 @@ public class Quantity<Q extends Quantity<Q>> {
 
     private final Number number;
     private final Unit<Q> unit;
-    private final Class clazz;
+    private final Class kind;
 
     /**
      * @param number
@@ -44,10 +44,10 @@ public class Quantity<Q extends Quantity<Q>> {
         this(null, number, unit);
     }
 
-    public Quantity(Class<Q> clazz, Number number, Unit<Q> unit) {
+    public Quantity(Class<Q> kind, Number number, Unit<Q> unit) {
         this.number = number;
         this.unit = unit;
-        this.clazz = clazz;
+        this.kind = kind;
     }
 
     /**
@@ -79,41 +79,40 @@ public class Quantity<Q extends Quantity<Q>> {
     }
 
     /**
-     * Gets the quantity name.
+     * Gets the quantity 's kind.
      *
      * The result depends on how the quantity is built:
      * <ul>
-     *     <li>if the `clazz` parameter is set, returns the simple name of this class</li>
-     *     <li>if the `clazz` parameter is not set, infer it by reflection</li>
+     *     <li>if the `kind` parameter is set, returns the simple name of this class</li>
+     *     <li>if the `kind` parameter is not set, infer it by reflection</li>
      *     <li>classes extending quantity mechanism that can't rely on the previous options must override this
      *     method.</li>
      * </ul>
      *
      * @return the quantity name, "unknown" if it can't be inferred.
      */
-    public String getQuantityName() {
-        if (this.clazz == null) {
+    public String getKind() {
+        if (this.kind == null) {
             ParameterizedType sup = (ParameterizedType) this.getClass().getGenericSuperclass();
             if (sup.getActualTypeArguments().length == 0  || ! (sup.getActualTypeArguments()[0] instanceof Class)) {
                 return UNKNOWN_NAME;
             }
             Class q = (Class) sup.getActualTypeArguments()[0];
-            return q.getSimpleName();
+            return q.getName();
         } else {
-            return this.clazz.getSimpleName();
+            return this.kind.getName();
         }
     }
 
+    /**
+     * Adds the current quantity with the given one.
+     * Before being added, the given quantity is converted to the current unit.
+     * @param that the quantity to add
+     * @return a new quantity adding the two quantities. The quantity's unit is the current unit.
+     */
     public Quantity<Q> add(Quantity<Q> that) {
-        if (this.getUnit().isCompatible(that.getUnit())) {
-            // Units are compatible, but we still must use the normalized quantity.
-            return valueOf(that.getNormalizedQuantity().getNumber().doubleValue() + this.getNormalizedQuantity().getNumber
-                    ().doubleValue
-                    (), unit);
-        } else {
-           throw new IncommensurableException("Cannot add " + this.toString() + " and " + that.toString() + " - " +
-                   "units are incompatible");
-        }
+        Quantity<Q> that2 = that.as(unit);
+        return valueOf(that2.getNumber().doubleValue() + this.getNumber().doubleValue(), unit);
     }
 
     public Quantity<Q> sub(Quantity<Q> that) {
@@ -143,15 +142,7 @@ public class Quantity<Q extends Quantity<Q>> {
         Quantity<Q> normalized = getNormalizedQuantity();
 
 
-        // The conversion depends on the type of unit.
-        // Base -> Base : possible only if the two units are the same, or if their dimension are the same and not NONE.
-        // Base -> Derived : possible only if their dimensions are the same and not NONE(which would mean that the derived unit is
-        // not really a derived unit
-        // Derived -> Base : possible only if their dimensions are the same and not NONE (which would mean that the
-        // derived unit is not really a derived unit
-        // Derived -> Derived : possible only if their dimensions are the same
-        // * -> Transformed and Transformed -> * : a converter chain must exit
-
+        // For base and derived unit we apply dimensional analysis to determine if the units are compatible.
         if (!(this.unit instanceof TransformedUnit) && !(unit instanceof  TransformedUnit)) {
             Dimension dimension1 = this.unit.getDimension();
             Dimension dimension2 = unit.getDimension();
