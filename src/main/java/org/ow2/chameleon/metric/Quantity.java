@@ -127,6 +127,25 @@ public class Quantity<Q extends Quantity<Q>> {
         return new Quantity<Q>(kind, getNumber().doubleValue() * number.doubleValue(), getUnit());
     }
 
+    public boolean isMoreThan(Quantity<Q> that) {
+        Quantity<Q> that2 = that.as(unit);
+        return this.number.doubleValue() > that2.number.doubleValue();
+    }
+
+    public boolean isLessThan(Quantity<Q> that) {
+        Quantity<Q> that2 = that.as(unit);
+        return this.number.doubleValue() < that2.number.doubleValue();
+    }
+
+    public boolean isEqualTo(Quantity<Q> that, double delta) {
+        Quantity<Q> that2 = that.as(unit);
+        return Math.abs(that2.number.doubleValue() - number.doubleValue()) <= delta;
+    }
+
+    public boolean isEqualTo(Quantity<Q> that) {
+        return isEqualTo(that, 0);
+    }
+
     public Quantity<Q> getNormalizedQuantity() {
         if (unit instanceof TransformedUnit) {
             TransformedUnit<Q> transformedUnit = (TransformedUnit<Q>) getUnit();

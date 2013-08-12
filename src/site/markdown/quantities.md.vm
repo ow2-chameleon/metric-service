@@ -59,7 +59,23 @@ Quantities can also be multiplicand by a constant:
 Comparing quantities
 --------------------
 
-<strong>TODO</strong>
+You can compare quantities from the same kind:
+
+    Quantity<Length> l1000m = new Length(1000, Length.METER);
+    Quantity<Length> l1km = new Length(1000, Length.KILOMETER);
+    Quantity<Length> l900m = new Length(900, Length.METER);
+    Quantity<Length> l901m = new Length(901, Length.METER);
+
+    // Comparison converts units
+    assertThat(l1000m.isEqualTo(l1km));
+    assertThat(l1000m.isMoreThan(l900m));
+    assertThat(l900m.isLessThan(l1km));
+    assertThat(l900m.isLessThan(l1000m));
+
+    // isEqualTo can be use with a delta
+    assertThat(l900m.isEqualTo(l901m, 5));
+    assertThat(l901m.isEqualTo(l900m, 5));
+
 
 Converting quantities
 ---------------------
