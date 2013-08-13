@@ -33,9 +33,9 @@ public class Quantity<Q extends Quantity<Q>> {
      */
     public static final String UNKNOWN_NAME = "unknown";
 
-    private final Number number;
-    private final Unit<Q> unit;
-    private final String kind;
+    protected final Number number;
+    protected final Unit<Q> unit;
+    protected final String kind;
 
     /**
      * Creates a quantity.
