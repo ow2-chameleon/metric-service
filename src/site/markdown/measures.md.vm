@@ -1,61 +1,155 @@
-# Measures
+Measures
+======
 
-A measure is a structure composed by:
+A measure is a 'quantity' captured by a sensor (or reported by something) at a specific time. Measures are made to be
+traceable.
 
-* An identifier
-* A quantity (i.e. a value and an unit)
-* Min an max deviation
-* A timestamp
+Anatomy
+-------
 
-Measure object
+A <a href="apidocs/org/ow2/chameleon/metric/measure/Measure.html">Measure</a> can be represented as:
+
+    |-------------------------------------------------------|
+    |  ORIGIN  |  MEASURED QUANTITY/IES   |   CAPTURE TIME  |
+    |-------------------------------------------------------|
+
+The measure structure is made to enforce traceability. The origin specifies from where comes the measure. It can be
+the sensor id, the person reported the measure or whatever suit your traceability need.
+
+The measure contains a structure of measured quantity. Basically, a measured quantity is a `quantity` decorated with
+an error range. Measures are parametrized with the type of structure.
+
+Finally the capture time is the time when the measure was taken.
+
+Measure objects are immutable.
+
+Measured Quantity
+------------------
+
+Each measure wraps one or several measured quantities. A measured quantity is a quantity decorated with an error
+range. For example, 5V +/-0.5 is a measured quantity. The error is expressed either as:
+
+* a delta
+* a min and max deviations
+
+For the previous example, the real quantity is contained in the range [4.5, 5.5].
+
+Measured quantities can also be exact, i.e. no deviations. They also provide method to check if a given value or
+quantity is in the range of the the measure. As quantities, measure quantities are immutable.
+
+Measure Types
 --------------
 
-A <a href="apidocs/org/ow2/chameleon/metric/measure/Measure.html">measure</a> can be represented as:
+Measures contain structures of measured quantities. The library provides three implementation of `Measure`:
 
+* `ScalarMeasures` wrap one measured quantities
+* `VectorMeasures` wrap a list of measured quantities
+* `ComposedMeasures` wrap a named list of measured quantities
 
-    |----------------------------------------------------------------------|
-    |  ID  |  QUANTITY   |   minDeviation  |   maxDeviation  |  TIMESTAMP  |
-    |----------------------------------------------------------------------|
+Measure objects a created using builder objects.
 
-The measure structure is made to enforce traceability. The `id` field specifies from where the measure is taken and
-an unique id. The measured value is contained in the `quantity` field. A quantity is a couple &lt;value-unit&gt;.
+Scalar measures
+---------------
 
-As most of the measured values are not really exact, the error is represented with a min and max deviation. For
-instance, a measure of 500 Lux +/- 10 Lux has a min and max deviation set to 10. Basically,
-the value is in the range [measure - minDeviation, measure + maxDeviation].
+<a href="apidocs/org/ow2/chameleon/metric/measure/ScalarMeasure.html">Scalar measures</a> are measures wrapping one
+measured quantity:
 
-Finally the timestamp determines when the measure was taken.
+    |------------------------------------------------|
+    |  ORIGIN  | MEASURED QUANTITY |   CAPTURE TIME  |
+    |------------------------------------------------|
 
-Notcie that measure objects are immutable.
+Creating a scalar measure is done using a `ScalarMeasureBuilder`:
 
-Creating measures
------------------
+    ScalarMeasure<Temperature> measure = new ScalarMeasure.ScalarMeasureBuilder<Temperature>()
+         .sensor("thermometer")
+         .hasMeasured(new Temperature(10, Temperature.CELSIUS))
+         .at(new Date())
+         .build();
 
-A <a href="apidocs/org/ow2/chameleon/metric/measure/Measure.Builder.html">builder</a> is provided to create a measure.
-This made the creation of new measure particularly easy. Don't forget that measure are immutable.
-
-Using the builder is straightforward:
-
-    Measure m = new Measure.Builder("light-sensor-1234-567-89")
-        .quantity(Quantity.valueOf(Illuminance.class, 10, Illuminance.LUX))
-        .minDeviation(0.5)
-        .maxDeviation(0.5)
-        .timeStamp(System.currentTimeMillis())
+    ScalarMeasure<Temperature> measure2 = new ScalarMeasure.ScalarMeasureBuilder<Temperature>()
+        .measure(new Temperature(10, Temperature.CELSIUS))
+        .takenBy("thermometer")
+        .at(new Date())
         .build();
 
-The builder object receive the measure's id in parameter. The `quantity` method sets the measured quantity. The `min`
-and `max` deviation methods set the measure error. The timeStamp sets the capture time. Finally the `build`
-method creates the measure.
+The builder is parametrized with the quantity's kind (Temperature). The builder supports two type of sentences:
 
-Not Captured measure
---------------------
+1. sensor X hasMeasured Q at D
+2. measure Q takenBy X at D
 
-Sometimes the measure cannot be read correctly, but for traceability purpose you still want to emit a measure. To
-generate such measure use:
+To retrieve the `MeasuredQuantity`, use the `measure()` method
 
-    Measure notCapture = new Measure.Builder("0000").notCaptured().timeStamp(System.currentTimeMillis()).build();
+            MeasuredQuantity<Temperature> measured = measure.measure();
+
+Vector measures
+---------------
+
+<a href="apidocs/org/ow2/chameleon/metric/measure/VectorMeasure.html">Vector measures</a> are measures wrapping a
+list of measured quantities:
+
+    |----------------------------------------------------------|
+    |  ORIGIN  | LIST OF MEASURED QUANTITIES |   CAPTURE TIME  |
+    |----------------------------------------------------------|
+
+Creating a vector measure is done using a `VectorMeasureBuilder`:
+
+    VectorMeasure<Acceleration> measure = 
+			new VectorMeasure.VectorMeasureBuilder<Acceleration>()
+        .sensor("gyroscope")
+        .hasMeasured(new Acceleration(1))
+        .hasMeasured(new Acceleration(2), new Acceleration(3))
+        .at(new Date())
+        .build();
+
+    VectorMeasure<Acceleration> measure2 = 
+			new VectorMeasure.VectorMeasureBuilder<Acceleration>()
+        .measure(new Acceleration(1))
+        .measure(new Acceleration(2), 0.1)
+        .measure(new Acceleration(3))
+        .takenBy("gyroscope")
+        .at(new Date())
+        .build();
+
+To retrieve the list of measured quantities:
+
+    List<MeasuredQuantity<Acceleration>> measured = measure.measure();
 
 
+Composed measures
+-----------------
 
+While vector measures wrap a list of measured quantities, composed measure wrap a map of measured quantities. Each
+stored quantities has a name.
 
+Creating a composed measure is done using a `ComposedMeasureBuilder`:
 
+    ComposedMeasure<Angle> measure = 
+			new ComposedMeasure.ComposedMeasureBuilder<Angle>()
+        .sensor("compass")
+        .hasMeasured("a", new Angle(5, Angle.RADIAN))
+        .hasMeasured("b", MeasuredQuantity.<Angle>notCaptured())
+        .at(1000)
+        .build();
+
+Each measured quantities added to the measure has a name. This name is used to retrieve that quantities.
+
+To retrieve the map of measured quantities:
+
+    Map<String, MeasuredQuantity> measures = measure.measure();
+		MeasureQuantity q = measured.get("a");
+
+Not captured measures
+----------------------
+
+Sometimes, a measure cannot be correctly retrieved from the sensor. Nevertheless, you want to emit a measure depicting this state. To handle this case, the Measure contains a measured quantities set as _not captured_:
+
+    ScalarMeasure<Temperature> bad = 
+			new ScalarMeasure.ScalarMeasureBuilder<Temperature>()
+        .measure(MeasuredQuantity.<Temperature>notCaptured())
+        .takenBy("thermometer")
+        .at(new Date())
+        .build();
+
+You can check if a measured quantity is a _not captured_ measure:
+
+    measured.isNotCaptured();

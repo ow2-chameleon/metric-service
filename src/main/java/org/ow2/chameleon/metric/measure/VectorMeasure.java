@@ -25,15 +25,15 @@ public class VectorMeasure<Q extends Quantity<Q>> extends AbstractMeasure<List<M
 
     /**
      * Builder to create vector measure object.
-     *
-     *<code>
+     * <p></p>
+     *<code><pre>
      *      VectorMeasure<Acceleration> measure = new VectorMeasure.VectorMeasureBuilder<Acceleration>()
      *          .sensor("gyroscope")
      *          .hasMeasured(new Acceleration(1))
      *          .hasMeasured(new Acceleration(2), new Acceleration(3))
      *          .at(new Date())
      *          .build();
-     *</code>
+     *</pre></code>
      * @param <Q> the kind of quantity captured by the measure
      */
     public static class VectorMeasureBuilder<Q extends Quantity<Q>> {

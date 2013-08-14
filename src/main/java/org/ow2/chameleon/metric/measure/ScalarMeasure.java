@@ -1,7 +1,6 @@
 package org.ow2.chameleon.metric.measure;
 
 import org.ow2.chameleon.metric.Quantity;
-import sun.jvm.hotspot.interpreter.BytecodeJsrW;
 
 import java.util.Date;
 
@@ -29,8 +28,8 @@ public class ScalarMeasure<Q extends Quantity<Q>> extends AbstractMeasure<Measur
     /**
      * Builder to create scalar measure object.
      *
-     * <strong>Examples:</strong>
-     * <code>
+     * <p><strong>Examples:</strong></p>
+     * <code><pre>
      *     ScalarMeasure<Temperature> measure = new ScalarMeasure.ScalarMeasureBuilder<Temperature>()
      *          .sensor("thermometer")
      *          .hasMeasured(new Temperature(10, Temperature.CELSIUS))
@@ -42,7 +41,7 @@ public class ScalarMeasure<Q extends Quantity<Q>> extends AbstractMeasure<Measur
      *          .takenBy("thermometer")
      *          .at(new Date())
      *          .build();
-     * </code>
+     * </pre></code>
      *
      * @param <Q> the kind of quantity captured by the measure
      */
