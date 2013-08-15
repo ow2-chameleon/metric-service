@@ -20,7 +20,7 @@ public class ScalarMeasure<Q extends Quantity<Q>> extends AbstractMeasure<Measur
     }
 
     @Override
-    public MeasuredQuantity<Q> measure() {
+    public MeasuredQuantity<Q> content() {
     return quantity;
     }
 

@@ -3,8 +3,6 @@ package org.ow2.chameleon.metric.measure;
 import org.ow2.chameleon.metric.Quantity;
 import org.ow2.chameleon.metric.Unit;
 
-import java.math.BigDecimal;
-
 /**
  * Measured quantities are quantities with min and max derivation. The exact value is in the range [value -
  * minDerivation, value + maxDerivation].
@@ -20,7 +18,11 @@ public class MeasuredQuantity<Q extends Quantity<Q>> extends Quantity<Q> {
     @SuppressWarnings("unchecked")
     public static MeasuredQuantity NOT_CAPTURED_QUANTITY = new MeasuredQuantity("", 0.0, new Unit("\u2205", "NaM"), 0, 0);
 
-
+    /**
+     * Gets a not captured quantity.
+     * @param <Q> the kind
+     * @return a not captured quantity
+     */
     public static <Q extends Quantity<Q>> MeasuredQuantity<Q> notCaptured() {
         //noinspection unchecked
         return NOT_CAPTURED_QUANTITY;
@@ -142,7 +144,7 @@ public class MeasuredQuantity<Q extends Quantity<Q>> extends Quantity<Q> {
     public String toString() {
         return "MeasuredQuantity{" +
                 "value=" + value() + " " + unit().getSymbol() +
-                "minDerivation=" + minDerivation +
+                ", minDerivation=" + minDerivation +
                 ", maxDerivation=" + maxDerivation +
                 '}';
     }
@@ -153,5 +155,13 @@ public class MeasuredQuantity<Q extends Quantity<Q>> extends Quantity<Q> {
      */
     public boolean isExact() {
         return ! isNotCaptured()  && minDerivation == 0  && maxDerivation == 0;
+    }
+
+    public double getMinDerivation() {
+        return minDerivation;
+    }
+
+    public double getMaxDerivation() {
+        return maxDerivation;
     }
 }

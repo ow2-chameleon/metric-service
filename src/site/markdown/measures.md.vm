@@ -79,7 +79,7 @@ The builder is parametrized with the quantity's kind (Temperature). The builder 
 
 To retrieve the `MeasuredQuantity`, use the `measure()` method
 
-            MeasuredQuantity<Temperature> measured = measure.measure();
+            MeasuredQuantity<Temperature> measured = measure.content();
 
 Vector measures
 ---------------
@@ -112,7 +112,7 @@ Creating a vector measure is done using a `VectorMeasureBuilder`:
 
 To retrieve the list of measured quantities:
 
-    List<MeasuredQuantity<Acceleration>> measured = measure.measure();
+    List<MeasuredQuantity<Acceleration>> measured = measure.content();
 
 
 Composed measures
@@ -123,11 +123,12 @@ stored quantities has a name.
 
 Creating a composed measure is done using a `ComposedMeasureBuilder`:
 
-    ComposedMeasure<Angle> measure = 
-			new ComposedMeasure.ComposedMeasureBuilder<Angle>()
+    ComposedMeasure measure =
+			new ComposedMeasure.ComposedMeasureBuilder()
         .sensor("compass")
         .hasMeasured("a", new Angle(5, Angle.RADIAN))
         .hasMeasured("b", MeasuredQuantity.<Angle>notCaptured())
+        .hasMeasured("c", new Force(10))
         .at(1000)
         .build();
 
@@ -135,8 +136,13 @@ Each measured quantities added to the measure has a name. This name is used to r
 
 To retrieve the map of measured quantities:
 
-    Map<String, MeasuredQuantity> measures = measure.measure();
-		MeasureQuantity q = measured.get("a");
+    Map<String, MeasuredQuantity> measures = measure.content();
+    MeasuredQuantity q = measures.get("a");
+
+    // Direct access from the measure object
+    MeasuredQuantity<Angle> q2 = measure.get("a");
+    MeasuredQuantity<Force> q3 = measure.get("c", Force.class);
+
 
 Not captured measures
 ----------------------
@@ -152,4 +158,4 @@ Sometimes, a measure cannot be correctly retrieved from the sensor. Nevertheless
 
 You can check if a measured quantity is a _not captured_ measure:
 
-    measured.isNotCaptured();
+    bad.content().isNotCaptured();

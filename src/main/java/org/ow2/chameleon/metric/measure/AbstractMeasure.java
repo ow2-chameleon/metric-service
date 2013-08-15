@@ -28,7 +28,7 @@ public abstract class AbstractMeasure<T> implements Measure<T> {
     }
 
     @Override
-    public Date getCaptureTime() {
+    public Date date() {
         return captureTime;
     }
 

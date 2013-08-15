@@ -21,9 +21,9 @@ public class ScalarMeasureTest {
                 .build();
 
         assertThat(measure.origin()).isEqualTo("thermometer");
-        assertThat(measure.measure().value().doubleValue()).isEqualTo(10);
-        assertThat(measure.measure().unit()).isEqualTo(Temperature.CELSIUS);
-        assertThat(measure.measure().isExact());
+        assertThat(measure.content().value().doubleValue()).isEqualTo(10);
+        assertThat(measure.content().unit()).isEqualTo(Temperature.CELSIUS);
+        assertThat(measure.content().isExact());
     }
 
     @Test
@@ -35,11 +35,11 @@ public class ScalarMeasureTest {
                 .build();
 
         assertThat(measure.origin()).isEqualTo("thermometer");
-        assertThat(measure.measure().value().doubleValue()).isEqualTo(10);
-        assertThat(measure.measure().unit()).isEqualTo(Temperature.CELSIUS);
-        assertThat(measure.measure().isExact()).isFalse();
-        assertThat(measure.measure().minDerivation).isEqualTo(0.5);
-        assertThat(measure.measure().maxDerivation).isEqualTo(0.5);
+        assertThat(measure.content().value().doubleValue()).isEqualTo(10);
+        assertThat(measure.content().unit()).isEqualTo(Temperature.CELSIUS);
+        assertThat(measure.content().isExact()).isFalse();
+        assertThat(measure.content().minDerivation).isEqualTo(0.5);
+        assertThat(measure.content().maxDerivation).isEqualTo(0.5);
     }
 
     @Test
@@ -51,9 +51,9 @@ public class ScalarMeasureTest {
                 .build();
 
         assertThat(measure.origin()).isEqualTo("thermometer");
-        assertThat(measure.measure().value().doubleValue()).isEqualTo(10);
-        assertThat(measure.measure().unit()).isEqualTo(Temperature.CELSIUS);
-        assertThat(measure.measure().isExact());
+        assertThat(measure.content().value().doubleValue()).isEqualTo(10);
+        assertThat(measure.content().unit()).isEqualTo(Temperature.CELSIUS);
+        assertThat(measure.content().isExact());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ScalarMeasureTest {
                 .sensor("thermometer").hasNotCapturedAValueAt(1000).build();
 
         assertThat(measure.origin()).isEqualTo("thermometer");
-        assertThat(measure.measure().isNotCaptured());
-        assertThat(measure.measure().isExact()).isFalse();
+        assertThat(measure.content().isNotCaptured());
+        assertThat(measure.content().isExact()).isFalse();
     }
 }

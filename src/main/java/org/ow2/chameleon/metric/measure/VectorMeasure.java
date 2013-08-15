@@ -19,7 +19,7 @@ public class VectorMeasure<Q extends Quantity<Q>> extends AbstractMeasure<List<M
     }
 
     @Override
-    public List<MeasuredQuantity<Q>> measure() {
+    public List<MeasuredQuantity<Q>> content() {
         return measures;
     }
 

@@ -21,7 +21,7 @@ public class VectorMeasureTest {
                  .at(new Date())
                  .build();
 
-        assertThat(measure.measure()).containsExactly(
+        assertThat(measure.content()).containsExactly(
                 new MeasuredQuantity<Acceleration>(new Acceleration(1)),
                 new MeasuredQuantity<Acceleration>(new Acceleration(2)),
                 new MeasuredQuantity<Acceleration>(new Acceleration(3))
@@ -38,7 +38,7 @@ public class VectorMeasureTest {
                 .at(new Date())
                 .build();
 
-        assertThat(measure.measure()).containsExactly(
+        assertThat(measure.content()).containsExactly(
                 new MeasuredQuantity<Acceleration>(new Acceleration(1)),
                 new MeasuredQuantity<Acceleration>(new Acceleration(2), 0.1),
                 new MeasuredQuantity<Acceleration>(new Acceleration(3))
@@ -55,7 +55,7 @@ public class VectorMeasureTest {
                 .at(1000)
                 .build();
 
-        assertThat(measure.measure()).containsExactly(
+        assertThat(measure.content()).containsExactly(
                 MeasuredQuantity.<Acceleration>notCaptured(),
                 new MeasuredQuantity<Acceleration>(new Acceleration(2)),
                 new MeasuredQuantity<Acceleration>(new Acceleration(3))

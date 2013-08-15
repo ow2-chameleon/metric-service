@@ -21,13 +21,13 @@ public interface Measure<T> {
      * Gets the capture time.
      * @return the date when the measure is taken.
      */
-    public Date getCaptureTime();
+    public Date date();
 
     /**
      * The structure of measured quantity.
      * @return a captured data
      */
-    public T measure();
+    public T content();
 
     /**
      * The origin of the measure (sensor id or whatever enforcing traceability).
