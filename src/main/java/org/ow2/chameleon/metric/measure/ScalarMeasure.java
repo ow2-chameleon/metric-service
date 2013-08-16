@@ -21,13 +21,12 @@ public class ScalarMeasure<Q extends Quantity<Q>> extends AbstractMeasure<Measur
 
     @Override
     public MeasuredQuantity<Q> content() {
-    return quantity;
+        return quantity;
     }
-
 
     /**
      * Builder to create scalar measure object.
-     *
+     * <p/>
      * <p><strong>Examples:</strong></p>
      * <code><pre>
      *     ScalarMeasure<Temperature> measure = new ScalarMeasure.ScalarMeasureBuilder<Temperature>()
@@ -35,7 +34,7 @@ public class ScalarMeasure<Q extends Quantity<Q>> extends AbstractMeasure<Measur
      *          .hasMeasured(new Temperature(10, Temperature.CELSIUS))
      *          .at(new Date())
      *          .build();
-     *
+     * <p/>
      *     ScalarMeasure<Temperature> measure2 = new ScalarMeasure.ScalarMeasureBuilder<Temperature>()
      *          .measure(new Temperature(10, Temperature.CELSIUS))
      *          .takenBy("thermometer")
@@ -75,7 +74,7 @@ public class ScalarMeasure<Q extends Quantity<Q>> extends AbstractMeasure<Measur
         }
 
         public ScalarMeasureBuilder<Q> takenBy(String origin) {
-            return  sensor(origin);
+            return sensor(origin);
         }
 
         public ScalarMeasureBuilder<Q> measure(Quantity<Q> q) {
@@ -107,11 +106,15 @@ public class ScalarMeasure<Q extends Quantity<Q>> extends AbstractMeasure<Measur
             if (date == null) {
                 throw new IllegalArgumentException("The measure date must be set");
             }
-            if (quantity == null  && ! notCaptured) {
+            if (quantity == null && !notCaptured) {
                 throw new IllegalArgumentException("The measured quantity is not set");
             }
-            if (! notCaptured) {
-                return new ScalarMeasure<Q>(from, date, new MeasuredQuantity<Q>(quantity, minDeviation, maxDeviation));
+            if (!notCaptured) {
+                if (quantity instanceof MeasuredQuantity) {
+                    return new ScalarMeasure<Q>(from, date, (MeasuredQuantity<Q>) quantity);
+                } else {
+                    return new ScalarMeasure<Q>(from, date, new MeasuredQuantity<Q>(quantity, minDeviation, maxDeviation));
+                }
             } else {
                 return new ScalarMeasure<Q>(from, date, MeasuredQuantity.<Q>notCaptured());
             }

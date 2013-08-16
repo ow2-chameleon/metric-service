@@ -58,7 +58,11 @@ public class VectorMeasure<Q extends Quantity<Q>> extends AbstractMeasure<List<M
 
         public VectorMeasureBuilder<Q> hasMeasured(Quantity<Q>... q) {
             for (Quantity<Q> quantity : q) {
-                this.quantities.add(new MeasuredQuantity<Q>(quantity));
+                if (quantity instanceof MeasuredQuantity) {
+                    this.quantities.add((MeasuredQuantity<Q>) quantity);
+                } else {
+                    this.quantities.add(new MeasuredQuantity<Q>(quantity));
+                }
             }
             return this;
         }

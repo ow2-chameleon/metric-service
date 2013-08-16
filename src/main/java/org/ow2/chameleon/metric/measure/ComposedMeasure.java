@@ -74,13 +74,17 @@ public class ComposedMeasure extends AbstractMeasure<Map<String, MeasuredQuantit
             return this;
         }
 
-        public ComposedMeasureBuilder hasMeasured(String name, Quantity q) {
-            this.quantities.put(name, new MeasuredQuantity(q));
+        public <A extends Quantity<A>> ComposedMeasureBuilder hasMeasured(String name, Quantity<A> q) {
+            if (q instanceof MeasuredQuantity) {
+                this.quantities.put(name, (MeasuredQuantity<A>) q);
+            } else {
+                this.quantities.put(name, new MeasuredQuantity<A>(q));
+            }
             return this;
         }
 
-        public ComposedMeasureBuilder hasMeasured(String name, Quantity q, double delta) {
-            this.quantities.put(name, new MeasuredQuantity(q, delta));
+        public <A extends Quantity<A>>  ComposedMeasureBuilder hasMeasured(String name, Quantity<A> q, double delta) {
+            this.quantities.put(name, new MeasuredQuantity<A>(q, delta));
             return this;
         }
 
