@@ -50,6 +50,8 @@
     <properties>
         <site.path>snapshot</site.path>
         <lastReleasedVersion>N/A</lastReleasedVersion>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
 
@@ -107,6 +109,7 @@
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
+                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
 
