@@ -94,6 +94,12 @@ public class TransformedUnitBuilder<Q extends Quantity<Q>> {
         return this;
     }
 
+    public TransformedUnitBuilder<Q> dividedBy(Number constant) {
+        Number ratio = Math.pow(constant.doubleValue(), -1);
+        conversion = new Compound(conversion, new Multiplication(ratio));
+        return this;
+    }
+
     public TransformedUnitBuilder<Q> withConverter() {
         registerConverter = true;
         return this;

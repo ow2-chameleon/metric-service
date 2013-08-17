@@ -15,9 +15,7 @@
 
 package org.ow2.chameleon.metric.quantities;
 
-import org.ow2.chameleon.metric.MetricService;
-import org.ow2.chameleon.metric.Quantity;
-import org.ow2.chameleon.metric.Unit;
+import org.ow2.chameleon.metric.*;
 
 /**
  * Represents an angle
@@ -29,6 +27,12 @@ public class Angle extends Quantity<Angle> {
 
     public static Unit<Angle> STERADIAN = MetricService.getInstance().getSystemOfUnits("SI")
             .getUnitByName("steradian");
+
+    public static Unit<Angle> DEGREE = new TransformedUnitBuilder<Angle>(RADIAN).times(Math.PI).dividedBy(180)
+            .name("degree")
+            .symbol("\u00B0")
+            .withConverter()
+            .build();
 
     /**
      * @param number

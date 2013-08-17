@@ -14,6 +14,7 @@
  */
 package org.ow2.chameleon.metric.quantities;
 
+import org.fest.assertions.Delta;
 import org.junit.Test;
 import org.ow2.chameleon.metric.Quantity;
 
@@ -43,5 +44,17 @@ public class AngleTest {
         } catch (IllegalArgumentException e) {
             // OK.
         }
+    }
+
+    @Test
+    public void testConversionRadianToDegree() {
+        Quantity<Angle> angleInRadian = new Angle(2, Angle.RADIAN);
+        assertThat(angleInRadian.as(Angle.DEGREE).value().doubleValue()).isEqualTo(114.6, Delta.delta(0.1));
+    }
+
+    @Test
+    public void testConversionDegreeToRadian() {
+        Quantity<Angle> angleInDegree = new Angle(180, Angle.DEGREE);
+        assertThat(angleInDegree.as(Angle.RADIAN).value().doubleValue()).isEqualTo(3.14, Delta.delta(0.01));
     }
 }
