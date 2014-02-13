@@ -63,6 +63,11 @@ public class Unit<Q extends Quantity<Q>> {
         return symbol.hashCode();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof Unit && ((Unit) obj).getSymbol().equals(this.symbol);
+    }
+
     public Dimension getDimension() {
         return dimension;
     }
