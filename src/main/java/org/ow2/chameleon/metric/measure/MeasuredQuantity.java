@@ -141,6 +141,17 @@ public class MeasuredQuantity<Q extends Quantity<Q>> extends Quantity<Q> {
     }
 
     @Override
+    public int hashCode() {
+        int result;
+        long temp;
+        temp = Double.doubleToLongBits(minDerivation);
+        result = (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(maxDerivation);
+        result = 31 * result + (int) (temp ^ (temp >>> 32));
+        return result;
+    }
+
+    @Override
     public String toString() {
         return "MeasuredQuantity{" +
                 "value=" + value() + " " + unit().getSymbol() +
