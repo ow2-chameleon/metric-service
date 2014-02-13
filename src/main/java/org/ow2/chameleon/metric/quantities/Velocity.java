@@ -15,20 +15,28 @@
 package org.ow2.chameleon.metric.quantities;
 
 import org.ow2.chameleon.metric.Quantity;
+import org.ow2.chameleon.metric.TransformedUnit;
+import org.ow2.chameleon.metric.TransformedUnitBuilder;
 import org.ow2.chameleon.metric.Unit;
 import org.ow2.chameleon.metric.systems.SI;
 
 /**
  * This class represents the speed quantity. It defines its Unit, symbol name
  * and methods to initialize the quantity.
- *
- * @author jeremy.savonet@gmail.com
  */
 public class Velocity extends Quantity<Velocity> {
 
     public static final Unit<Velocity> METRE_PER_SECOND = SI.getSI().getUnitBySymbol("m/s");
 
     public static final Unit<Velocity> METER_PER_SECOND = METRE_PER_SECOND;
+
+    public static final Unit<Velocity> KILOMETER_PER_HOUR = new TransformedUnitBuilder<Velocity>(METER_PER_SECOND)
+            .dividedBy(3600)
+            .times(1000)
+            .name("kilometer per hour")
+            .symbol("km/h")
+            .withConverter()
+            .build();
 
     /**
      * @param number
