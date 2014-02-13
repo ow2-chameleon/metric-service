@@ -80,7 +80,7 @@ public class MetricService {
     }
 
     public synchronized void removeSystemOfUnits(SystemOfUnits system) {
-        systems.remove(system);
+        systems.remove(system.getName());
     }
 
     public ConverterRegistry getConverterRegistry() {
